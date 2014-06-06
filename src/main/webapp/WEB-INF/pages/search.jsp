@@ -9,6 +9,7 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet" type="text/css">
     <link href="/css/normalize.css" rel="stylesheet" type="text/css">
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/css/select2.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div id="header">
@@ -17,8 +18,8 @@
     <div id="content">
       <div id="sidebar">
         <form action="search">
-          <input type="text" id="from-airport" name="fromAirport" placeholder="From airport">
-          <input type="text" id="to-airport" name="toAirport" placeholder="To airport">
+          <select id="from-airport" name="fromAirport" data-placeholder="From airport"></select>
+          <select id="to-airport" name="toAirport" data-placeholder="To airport"></select>
           <input type="text" id="leaving-date" name="leavingDate" placeholder="Leaving on">
           <input type="text" id="return-date" name="returnDate" placeholder="Returning on">
           <input type="submit" value="Find!">
@@ -29,5 +30,8 @@
         <!-- TEMPLATE WITH RESULTS-->
       </div>
     </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src="/js/select2.min.js"></script>
+    <script src="/js/app.js"></script>
   </body>
 </html>

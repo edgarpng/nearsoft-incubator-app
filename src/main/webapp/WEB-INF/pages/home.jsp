@@ -9,6 +9,7 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet" type="text/css">
     <link href="/css/normalize.css" rel="stylesheet" type="text/css">
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/css/select2.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div id="hero">
@@ -17,12 +18,15 @@
     </div>
     <div>
       <form action="search">
-        <input type="text" id="from-airport" name="fromAirport" placeholder="From airport">
-        <input type="text" id="to-airport" name="toAirport" placeholder="To airport">
+        <input type="hidden" id="from-airport" name="fromAirport" placeholder="From airport">
+        <input type="hidden" id="to-airport" name="toAirport" placeholder="To airport">
         <input type="text" id="leaving-date" name="leavingDate" placeholder="Leaving on">
         <input type="text" id="return-date" name="returnDate" placeholder="Returning on">
         <input type="submit" value="Find!">
       </form>
     </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src="/js/select2.min.js"></script>
+    <script src="/js/app.js"></script>
   </body>
 </html>

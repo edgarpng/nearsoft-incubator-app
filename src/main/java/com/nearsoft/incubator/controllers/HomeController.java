@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class HomeController extends BaseController{
 
     @RequestMapping(method = RequestMethod.GET)
     public String get(ModelMap model) {
