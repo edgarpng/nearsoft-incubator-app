@@ -18,8 +18,8 @@
     </div>
     <div>
       <form action="search">
-        <input type="hidden" id="from-airport" name="fromAirport" placeholder="From airport">
-        <input type="hidden" id="to-airport" name="toAirport" placeholder="To airport">
+        <input type="hidden" id="from-airport" name="fromAirport" placeholder="From city">
+        <input type="hidden" id="to-airport" name="toAirport" placeholder="To city">
         <input type="text" id="leaving-date" name="leavingDate" placeholder="Leaving on">
         <input type="text" id="return-date" name="returnDate" placeholder="Returning on">
         <input type="submit" value="Find!">

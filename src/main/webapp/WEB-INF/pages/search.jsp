@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,16 +19,26 @@
     <div id="content">
       <div id="sidebar">
         <form action="search">
-          <select id="from-airport" name="fromAirport" data-placeholder="From airport"></select>
-          <select id="to-airport" name="toAirport" data-placeholder="To airport"></select>
+          <input type="hidden" id="from-airport" name="fromAirport" placeholder="From city">
+          <input type="hidden" id="to-airport" name="toAirport" placeholder="To city">
           <input type="text" id="leaving-date" name="leavingDate" placeholder="Leaving on">
           <input type="text" id="return-date" name="returnDate" placeholder="Returning on">
           <input type="submit" value="Find!">
         </form>
       </div>
       <div id="results">
-        <span class="empty-results">No flights found. Try a different set of dates.</span>
-        <!-- TEMPLATE WITH RESULTS-->
+        <c:choose>
+          <c:when test="${not empty flights}">
+            <ul>
+              <c:forEach var="flight" items="${flights}">
+                <li>Flight number ${flight.flightNumber} by ${flight.carrierFsCode}. ${flight.stops} stops. Arriving at terminal ${flight.arrivalTerminal}</li>
+              </c:forEach>
+            </ul>
+          </c:when>
+          <c:otherwise>
+            <span class="empty-results">No flights found. Try a different set of dates.</span>
+          </c:otherwise>
+        </c:choose>
       </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
