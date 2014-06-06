@@ -21,7 +21,7 @@ import java.util.List;
 public class AirportsController extends BaseController{
 
     @Autowired
-    @Qualifier("flightServiceImpl")
+    @Qualifier("flightServiceMockImpl")
     private FlightService service;
 
     @RequestMapping(method = RequestMethod.GET)

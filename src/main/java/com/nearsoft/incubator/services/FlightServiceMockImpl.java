@@ -11,24 +11,34 @@ import java.util.List;
 /**
  * Created by edgar on 5/06/14.
  */
-@Component(value="flightServiceImpl")
-public class FlightServiceImpl implements FlightService {
+@Component(value="flightServiceMockImpl")
+public class FlightServiceMockImpl implements FlightService {
     @Override
     public List<Airport> getAllAirports() {
-        //TODO: Use the API
         Airport chihuahua = new Airport();
         chihuahua.setCity("Chihuahua");
         chihuahua.setCountryName("Mexico");
         chihuahua.setIata("CUU");
         chihuahua.setName("Roberto Fierro Airport");
+        Airport mexico = new Airport();
+        mexico.setCity("Distrito Federal");
+        mexico.setCountryName("Mexico");
+        mexico.setIata("MEX");
+        mexico.setName("Benito Juarez Airport");
+        Airport hermosillo = new Airport();
+        hermosillo.setCity("Hermosillo");
+        hermosillo.setCountryName("Mexico");
+        hermosillo.setIata("HMO");
+        hermosillo.setName("Ignacio Pesqueira Airport");
         LinkedList<Airport> list = new LinkedList<Airport>();
         list.add(chihuahua);
+        list.add(mexico);
+        list.add(hermosillo);
         return list;
     }
 
     @Override
     public List<Flight> getFlightsByRoute(Airport fromAirport, Airport toAirport, Date leavingDate, Date returnDate) {
-        //TODO: Use the API
         List<Flight> flights = new LinkedList<Flight>();
         Flight toMexico = new Flight();
         toMexico.setArrivalTerminal("2");
@@ -37,7 +47,15 @@ public class FlightServiceImpl implements FlightService {
         toMexico.setDepartureTime(new Date());
         toMexico.setFlightNumber("200");
         toMexico.setStops(2);
+        Flight otherToMexico = new Flight();
+        otherToMexico.setArrivalTerminal("1");
+        otherToMexico.setArrivalTime(new Date());
+        otherToMexico.setCarrierFsCode("VO");
+        otherToMexico.setDepartureTime(new Date());
+        otherToMexico.setFlightNumber("312");
+        otherToMexico.setStops(3);
         flights.add(toMexico);
+        flights.add(otherToMexico);
         return flights;
     }
 }
