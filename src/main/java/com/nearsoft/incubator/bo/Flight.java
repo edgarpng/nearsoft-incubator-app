@@ -13,6 +13,19 @@ public class Flight {
     private String arrivalTerminal;
     private String flightNumber;
     private int stops;
+    private long id;
+
+    public Flight(){
+        this.id = Math.round(Math.random() * 100);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Date getDepartureTime() {
         return departureTime;

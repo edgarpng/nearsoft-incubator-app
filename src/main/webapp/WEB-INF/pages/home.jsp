@@ -33,8 +33,8 @@
       </div>
       <div id="results">
         <ul>
-          {{#each flight in flights}}
-            <li>Flight number {{flight.flightNumber}} by {{flight.carrierFsCode}}. {{flight.stops}} stops. Arriving at terminal {{flight.arrivalTerminal}}</li>
+          {{#each flight in results}}
+            <li>Flight number {{flight.id}} by {{flight.carrierFsCode}}. {{flight.stops}} stops. Arriving at terminal {{flight.arrivalTerminal}}</li>
           {{/each}}
         </ul>
       </div>

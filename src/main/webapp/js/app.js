@@ -53,29 +53,38 @@
     App.SearchController = Ember.ObjectController.extend({
       actions: {
         search: function(){
-          var searchQuery = this.get('model');
+          var searchQuery = this.get('model'),
+          self = this;
           this.transitionToRoute('search', searchQuery);
+          this.store.find('flight', searchQuery).then(function (data) {
+            self.set('results', data);
+          }, function (error) {
+            console.error(error);
+          });
         }
       },
-      flights: function(){
-        var searchQuery = this.get('model');
-        return this.store.find('flight', searchQuery);
-      }.property()
+      results: null
+    });
+    App.SearchRoute = Ember.Route.extend({
+      setupController: function(controller, search) {
+        controller.set('model', search);
+        console.log('SETTING UP THE CONTROLLER');
+      }
     });
 
     //Ember Models
     App.Flight = DS.Model.extend({
-      departureTime: DS.attr('date'),
-      arrivalTime: DS.attr('date'),
+      departureTime: DS.attr('number'),
+      arrivalTime: DS.attr('number'),
       carrierFsCode: DS.attr('string'),
       arrivalTerminal: DS.attr('string'),
       flightNumber: DS.attr('string'),
       stops: DS.attr('number')
     });
-    App.Search = Ember.Object.extend({
-      fromAirport: '',
-      toAirport: '',
-      departureTime: '',
-      returnTIme: ''
+    App.Search = DS.Model.extend({
+      fromAirport: DS.attr('string'),
+      toAirport:  DS.attr('string'),
+      departureTime:  DS.attr('string'),
+      returnTIme:  DS.attr('string')
     });
 }());
