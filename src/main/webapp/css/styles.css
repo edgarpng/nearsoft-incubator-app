@@ -4,3 +4,9 @@ body{
 .logo{
   font-family: 'Open Sans', sans-serif;
 }
+div.ui-datepicker{
+ font-size: 13px;
+}
+.date-picker{
+  height: 21px;
+}
