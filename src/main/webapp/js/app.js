@@ -51,24 +51,23 @@
     //Ember Controllers
     App.ApplicationController = Ember.Controller.extend({});
     App.SearchController = Ember.ObjectController.extend({
+      results: null,
       actions: {
         search: function(){
-          var searchQuery = this.get('model'),
-          self = this;
-          this.transitionToRoute('search', searchQuery);
-          this.store.find('flight', searchQuery).then(function (data) {
-            self.set('results', data);
-          }, function (error) {
-            console.error(error);
-          });
+          var search = this.get('model');
+          this.updateResults(search);
+          this.transitionToRoute('search', search);
         }
       },
-      results: null
+      updateResults: function(search){
+        var results = this.store.find('flight', search);
+        this.set('results', results);
+      }
     });
     App.SearchRoute = Ember.Route.extend({
       setupController: function(controller, search) {
         controller.set('model', search);
-        console.log('SETTING UP THE CONTROLLER');
+        controller.updateResults(search);
       }
     });
 
