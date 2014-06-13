@@ -1,46 +1,40 @@
 package com.nearsoft.incubator.bo;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.Date;
 
 /**
  * Created by edgar on 5/06/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Flight {
 
-    private Date departureTime;
-    private Date arrivalTime;
+    private Date departureDate;
+    private Date arrivalDate;
     private String carrierFsCode;
     private String arrivalTerminal;
     private String flightNumber;
     private int stops;
-    private long id;
 
-    public Flight(){
-        this.id = Math.round(Math.random() * 100);
+    public String getId() {
+        return this.flightNumber;
     }
 
-    public long getId() {
-        return id;
+    public Date getDepartureDate() {
+        return departureDate;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public Date getDepartureTime() {
-        return departureTime;
+    public Date getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setDepartureTime(Date departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public Date getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(Date arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setArrivalDate(Date arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
     public String getCarrierFsCode() {

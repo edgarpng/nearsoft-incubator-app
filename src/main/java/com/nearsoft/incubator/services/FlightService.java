@@ -12,5 +12,5 @@ import java.util.List;
 public interface FlightService {
 
     public List<Airport> getAllAirports();
-    public List<Flight> getFlightsByRoute(Airport fromAirport, Airport toAirport, Date leavingDate, Date returnDate);
+    public List<Flight> getFlightsByRoute(String fromAirport, String toAirport, Date leavingDate, Date returnDate);
 }

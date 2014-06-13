@@ -45,7 +45,7 @@
 
     //Ember Routes
     App.Router.map(function(){
-      this.resource('search', {path: '/search/:fromAirport/:toAirport/:departureTime/:returnTime'});
+      this.resource('search', {path: '/search/:fromAirport/:toAirport/:departureDate/:returnDate'});
     });
 
     //Ember Controllers
@@ -73,8 +73,8 @@
 
     //Ember Models
     App.Flight = DS.Model.extend({
-      departureTime: DS.attr('number'),
-      arrivalTime: DS.attr('number'),
+      departureDate: DS.attr('string'),
+      arrivalDate: DS.attr('string'),
       carrierFsCode: DS.attr('string'),
       arrivalTerminal: DS.attr('string'),
       flightNumber: DS.attr('string'),
@@ -83,7 +83,7 @@
     App.Search = DS.Model.extend({
       fromAirport: DS.attr('string'),
       toAirport:  DS.attr('string'),
-      departureTime:  DS.attr('string'),
-      returnTIme:  DS.attr('string')
+      departureDate:  DS.attr('string'),
+      returnDate:  DS.attr('string')
     });
 }());

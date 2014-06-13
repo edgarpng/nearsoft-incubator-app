@@ -1,8 +1,11 @@
 package com.nearsoft.incubator.bo;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Created by edgar on 5/06/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Airport {
 
     private String iata;

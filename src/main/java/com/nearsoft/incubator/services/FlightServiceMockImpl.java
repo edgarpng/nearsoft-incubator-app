@@ -38,20 +38,20 @@ public class FlightServiceMockImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getFlightsByRoute(Airport fromAirport, Airport toAirport, Date leavingDate, Date returnDate) {
+    public List<Flight> getFlightsByRoute(String fromAirport, String toAirport, Date leavingDate, Date returnDate) {
         List<Flight> flights = new LinkedList<Flight>();
         Flight toMexico = new Flight();
         toMexico.setArrivalTerminal("2");
-        toMexico.setArrivalTime(new Date());
+        toMexico.setArrivalDate(new Date());
         toMexico.setCarrierFsCode("AA");
-        toMexico.setDepartureTime(new Date());
+        toMexico.setDepartureDate(new Date());
         toMexico.setFlightNumber("200");
         toMexico.setStops(2);
         Flight otherToMexico = new Flight();
         otherToMexico.setArrivalTerminal("1");
-        otherToMexico.setArrivalTime(new Date());
+        otherToMexico.setArrivalDate(new Date());
         otherToMexico.setCarrierFsCode("VO");
-        otherToMexico.setDepartureTime(new Date());
+        otherToMexico.setDepartureDate(new Date());
         otherToMexico.setFlightNumber("312");
         otherToMexico.setStops(3);
         flights.add(toMexico);

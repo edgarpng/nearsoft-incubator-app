@@ -27,8 +27,8 @@
       <div id="sidebar">
         {{input type="hidden" class="airport-picker" name="fromAirport" placeholder="From city" value=fromAirport}}
         {{input type="hidden" class="airport-picker" name="toAirport" placeholder="To city" value=toAirport}}
-        {{input type="text" class="date-picker" name="leavingDate" placeholder="Leaving on" value=departureTime}}
-        {{input type="text" class="date-picker" name="returnDate" placeholder="Returning on" value=returnTime}}
+        {{input type="text" class="date-picker" name="departureDate" placeholder="Leaving on" value=departureDate}}
+        {{input type="text" class="date-picker" name="returnDate" placeholder="Returning on" value=returnDate}}
         <input type="submit" value="Find!" {{action 'search'}}>
       </div>
       <div id="results">

@@ -21,15 +21,11 @@ import java.util.List;
 public class AirportsController extends BaseController{
 
     @Autowired
-    @Qualifier("flightServiceMockImpl")
+    @Qualifier("flightServiceImpl")
     private FlightService service;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Airport> getAllAirports(){
         return service.getAllAirports();
-    }
-
-    public FlightService getService() {
-        return service;
     }
 }

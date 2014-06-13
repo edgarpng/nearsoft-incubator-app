@@ -25,4 +25,21 @@
         </property>
     </bean>
 
+    <!-- Rest Template -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+    <!-- Register JSON Converter for RESTful Web Service -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- HTTP JSON MessageConverter -->
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="supportedMediaTypes" value="application/json" />
+    </bean>
+
 </beans>
