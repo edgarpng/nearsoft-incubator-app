@@ -62,9 +62,6 @@
       },
       updateResults: function(search){
         var results = this.store.find('flight', search);
-        results.then(function(data){
-          window.flights = data;
-        });
         this.set('results', results);
       }
     });
