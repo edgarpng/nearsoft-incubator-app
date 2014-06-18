@@ -1,14 +1,13 @@
 package com.nearsoft.incubator.controllers;
 
 import com.nearsoft.incubator.bo.Airport;
+import com.nearsoft.incubator.dao.AirportsDao;
 import com.nearsoft.incubator.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +22,17 @@ public class AirportsController extends BaseController{
     @Autowired
     @Qualifier("flightServiceImpl")
     private FlightService service;
+    @Autowired
+    @Qualifier("jdbcAirportsDao")
+    private AirportsDao airportsDao;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Airport> getAllAirports(){
-        return service.getAllAirports();
+        List<Airport> airports = airportsDao.getAllAirports();
+        if(airports.isEmpty()){
+            airports = service.getAllAirports();
+            airportsDao.save(airports);
+        }
+        return airports;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by edgar on 5/06/14.
  */
-@Component(value="flightServiceMockImpl")
+@Component("flightServiceMockImpl")
 public class FlightServiceMockImpl implements FlightService {
     @Override
     public List<Airport> getAllAirports() {

@@ -22,6 +22,7 @@
             var selectData = {text: 'city', results: airports};
 
             Ember.$('.airport-picker').select2({
+              minimumInputLength: 3,
               data: selectData,
               formatSelection: format,
               formatResult: format,

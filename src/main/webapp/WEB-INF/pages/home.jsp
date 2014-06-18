@@ -34,7 +34,15 @@
       <div id="results">
         <ul>
           {{#each flight in results}}
-            <li>Flight number {{flight.id}} by {{flight.carrierFsCode}}. {{flight.stops}} stops. Arriving at terminal {{flight.arrivalTerminal}}</li>
+            <li>Flight number {{flight.id}} by {{flight.carrierFsCode}}.
+            {{#if flight.stops}}
+              {{flight.stops}} stops.
+            {{else}}
+              Nonstop.
+            {{/if}}
+            Arriving at terminal {{flight.arrivalTerminal}}</li>
+          {{else}}
+            Sorry, no flights were found. Please try a different set of dates.
           {{/each}}
         </ul>
       </div>
