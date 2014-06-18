@@ -2,6 +2,7 @@ package com.nearsoft.incubator.services;
 
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
+import com.nearsoft.incubator.bo.Schedule;
 import com.nearsoft.incubator.util.FlightApiConfiguration;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +35,38 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getFlightsByRoute(String fromAirport, String toAirport, Date leavingDate, Date returnDate) {
+    public Schedule getScheduleByRoute(String departureAirport, String arrivalAirport, Date departure, Date arrival) {
+        //TODO: Cache the two methods
+        List<Flight> departureFlights = getDepartureFlights(departureAirport, arrivalAirport, departure);
+        List<Flight> arrivalFlights = getArrivalFlights(arrivalAirport, departureAirport, arrival);
+        Schedule schedule = new Schedule();
+        schedule.setDepartureFlights(departureFlights);
+        schedule.setArrivalFlights(arrivalFlights);
+        return schedule;
+    }
+
+    private List<Flight> getDepartureFlights(String fromAirport, String toAirport, Date departure){
+        String departuresEndpoint = configuration.getDepartingFlightsUrl();
+        return callScheduleApi(departuresEndpoint, fromAirport, toAirport, departure);
+    }
+
+    private List<Flight> getArrivalFlights(String fromAirport, String toAirport, Date arrival){
+        String arrivalsEndpoint = configuration.getArrivingFlightsUrl();
+        return callScheduleApi(arrivalsEndpoint, fromAirport, toAirport, arrival);
+    }
+
+    private List<Flight> callScheduleApi(String url, String fromAirport, String toAirport, Date date){
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("appId", configuration.getAppId());
         parameters.put("appKey", configuration.getAppKey());
-        parameters.put("fromAirport", fromAirport);
-        parameters.put("toAirport", toAirport);
+        parameters.put("departureAirport", fromAirport);
+        parameters.put("arrivalAirport", toAirport);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(leavingDate);
-        parameters.put("departingYear", calendar.get(Calendar.YEAR) + "");
-        parameters.put("departingMonth", calendar.get(Calendar.MONTH) + 1 + "");//Calendar month is zero-based (wtf?)
-        parameters.put("departingDay", calendar.get(Calendar.DAY_OF_MONTH) + "");
-        return restTemplate.getForObject(configuration.getFlightsUrl(), FlightsResponse.class, parameters).getScheduledFlights();
+        calendar.setTime(date);
+        parameters.put("year", calendar.get(Calendar.YEAR) + "");
+        parameters.put("month", calendar.get(Calendar.MONTH) + 1 + "");//Calendar month is zero-based (wtf?)
+        parameters.put("day", calendar.get(Calendar.DAY_OF_MONTH) + "");
+        return restTemplate.getForObject(url, FlightsResponse.class, parameters).getScheduledFlights();
     }
 
     /**

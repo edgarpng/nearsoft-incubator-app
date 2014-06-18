@@ -25,14 +25,16 @@
     </script>
     <script type="text/x-handlebars" data-template-name="search">
       <div id="sidebar">
-        {{input type="hidden" class="airport-picker" name="fromAirport" placeholder="From city" value=fromAirport}}
-        {{input type="hidden" class="airport-picker" name="toAirport" placeholder="To city" value=toAirport}}
-        {{input type="text" class="date-picker" name="departureDate" placeholder="Leaving on" value=departureDate}}
-        {{input type="text" class="date-picker" name="returnDate" placeholder="Returning on" value=returnDate}}
+        {{input type="hidden" class="airport-picker" placeholder="From city" value=departureAirport}}
+        {{input type="hidden" class="airport-picker" placeholder="To city" value=arrivalAirport}}
+        {{input type="text" class="date-picker" name="departureDate" placeholder="Departure date" value=departureDate}}
+        {{input type="text" class="date-picker" name="arrivalDate" placeholder="Arrival date" value=arrivalDate}}
         <input type="submit" value="Find!" {{action 'search'}}>
       </div>
       <div id="results">
-          {{#each flight in results}}
+        {{#if schedule.travelPossible}}
+          <h3>Departure:</h3>
+          {{#each flight in schedule.departureFlights}}
             <div class="result">
               <table>
                 <tr>
@@ -68,9 +70,49 @@
                 </tr>
               </table>
             </div>
-          {{else}}
-            Sorry, no flights were found. Please try a different set of dates.
           {{/each}}
+
+          <h3>Return:</h3>
+          {{#each flight in schedule.arrivalFlights}}
+            <div class="result">
+              <table>
+                <tr>
+                  <td><b>Flight number:</b></td>
+                  <td>{{flight.id}}</td>
+                </tr>
+                <tr>
+                  <td><b>Airline:</b></td>
+                  <td>{{flight.carrierFsCode}}</td>
+                </tr>
+                <tr>
+                  <td><b>Departure:</b></td>
+                  <td>{{flight.departureTime}} from {{flight.departureAirportFsCode}}</td>
+                </tr>
+                <tr>
+                  <td><b>Arrival:</b></td>
+                  <td>
+                    {{flight.arrivalTime}} to {{flight.arrivalAirportFsCode}}
+                    {{#if flight.arrivalTerminal}}
+                       at terminal {{flight.arrivalTerminal}}
+                    {{/if}}
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>Stops:</b></td>
+                  <td>
+                    {{#if flight.stops}}
+                      {{flight.stops}}
+                    {{else}}
+                      Nonstop.
+                    {{/if}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          {{/each}}
+        {{else}}
+            Sorry, no flights were found. Please try a different set of dates.
+        {{/if}}
       </div>
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

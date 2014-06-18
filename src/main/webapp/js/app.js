@@ -46,47 +46,31 @@
 
     //Ember Routes
     App.Router.map(function(){
-      this.resource('search', {path: '/search/:fromAirport/:toAirport/:departureDate/:returnDate'});
+      this.resource('search', {path: '/search/:departureAirport/:arrivalAirport/:departureDate/:arrivalDate'});
     });
 
     //Ember Controllers
     App.ApplicationController = Ember.Controller.extend({});
     App.SearchController = Ember.ObjectController.extend({
-      results: null,
+      schedule: null,
       actions: {
         search: function(){
           var search = this.get('model');
-          this.updateResults(search);
+          this.updateSchedule(search);
           this.transitionToRoute('search', search);
         }
       },
-      updateResults: function(search){
-        var results = this.store.find('flight', search);
-        this.set('results', results);
+      updateSchedule: function(search){
+        var schedule = DS.PromiseObject.create({
+          promise: $.getJSON('/schedules', $.param(search))
+        });
+        this.set('schedule', schedule);
       }
     });
     App.SearchRoute = Ember.Route.extend({
       setupController: function(controller, search) {
         controller.set('model', search);
-        controller.updateResults(search);
+        controller.updateSchedule(search);
       }
-    });
-
-    //Ember Models
-    App.Flight = DS.Model.extend({
-      departureTime: DS.attr('date'),
-      arrivalTime: DS.attr('date'),
-      departureAirportFsCode: DS.attr('string'),
-      arrivalAirportFsCode: DS.attr('string'),
-      carrierFsCode: DS.attr('string'),
-      arrivalTerminal: DS.attr('string'),
-      flightNumber: DS.attr('string'),
-      stops: DS.attr('number')
-    });
-    App.Search = DS.Model.extend({
-      fromAirport: DS.attr('string'),
-      toAirport:  DS.attr('string'),
-      departureDate:  DS.attr('string'),
-      returnDate:  DS.attr('string')
     });
 }());

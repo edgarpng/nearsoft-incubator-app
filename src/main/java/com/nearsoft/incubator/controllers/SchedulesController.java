@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.controllers;
 
-import com.nearsoft.incubator.bo.Flight;
+import com.nearsoft.incubator.bo.Schedule;
 import com.nearsoft.incubator.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,26 +13,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @Component
-@RequestMapping("/flights")
-public class FlightsController extends BaseController {
+@RequestMapping("/schedules")
+public class SchedulesController extends BaseController {
 
     @Autowired
     @Qualifier("flightServiceImpl")
     private FlightService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody Map<String,  List<Flight>> getFlights(@RequestParam("fromAirport") String fromAirport,
-                                                               @RequestParam("toAirport") String toAirport,
+    public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirport,
+                                                               @RequestParam("arrivalAirport") String arrivalAirport,
                                                                @RequestParam("departureDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date departureDate,
-                                                               @RequestParam("returnDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date returnDate){
-        HashMap<String, List<Flight>> results = new HashMap<String, List<Flight>>();
-        results.put("flights", service.getFlightsByRoute(fromAirport, toAirport, departureDate, returnDate));
-        return results;
+                                                               @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date arrivalDate){
+        return service.getScheduleByRoute(departureAirport, arrivalAirport, departureDate, arrivalDate);
     }
 }

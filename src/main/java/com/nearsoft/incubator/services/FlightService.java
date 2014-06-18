@@ -1,7 +1,7 @@
 package com.nearsoft.incubator.services;
 
 import com.nearsoft.incubator.bo.Airport;
-import com.nearsoft.incubator.bo.Flight;
+import com.nearsoft.incubator.bo.Schedule;
 
 import java.util.Date;
 import java.util.List;
@@ -12,5 +12,5 @@ import java.util.List;
 public interface FlightService {
 
     public List<Airport> getAllAirports();
-    public List<Flight> getFlightsByRoute(String fromAirport, String toAirport, Date leavingDate, Date returnDate);
+    public Schedule getScheduleByRoute(String departureAirport, String arrivalAirport, Date departure, Date arrival);
 }

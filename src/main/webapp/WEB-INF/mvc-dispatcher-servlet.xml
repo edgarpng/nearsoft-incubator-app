@@ -66,7 +66,8 @@
         <property name="appId" value="9a08398d" />
         <property name="appKey" value="d13a463da989d36d66a3b26ecb5c2a6b" />
         <property name="airportsUrl" value="https://api.flightstats.com/flex/airports/rest/v1/json/active?appId={appId}&amp;appKey={appKey}" />
-        <property name="flightsUrl" value="https://api.flightstats.com/flex/schedules/rest/v1/json/from/{fromAirport}/to/{toAirport}/departing/{departingYear}/{departingMonth}/{departingDay}?appId={appId}&amp;appKey={appKey}" />
+        <property name="departingFlightsUrl" value="https://api.flightstats.com/flex/schedules/rest/v1/json/from/{departureAirport}/to/{arrivalAirport}/departing/{year}/{month}/{day}?appId={appId}&amp;appKey={appKey}" />
+        <property name="arrivingFlightsUrl" value="https://api.flightstats.com/flex/schedules/rest/v1/json/from/{departureAirport}/to/{arrivalAirport}/arriving/{year}/{month}/{day}?appId={appId}&amp;appKey={appKey}" />
     </bean>
 
     <!--<jee:jndi-lookup id="apiConfiguration" expected-type="com.nearsoft.incubator.util.FlightApiConfiguration" jndi-name="java:comp/env/bean/configuration"/>-->

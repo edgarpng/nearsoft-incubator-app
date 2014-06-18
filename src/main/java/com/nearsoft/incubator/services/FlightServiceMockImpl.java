@@ -2,6 +2,7 @@ package com.nearsoft.incubator.services;
 
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
+import com.nearsoft.incubator.bo.Schedule;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -39,7 +40,7 @@ public class FlightServiceMockImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getFlightsByRoute(String fromAirport, String toAirport, Date leavingDate, Date returnDate) {
+    public Schedule getScheduleByRoute(String departureAirport, String arrivalAirport, Date departure, Date arrival) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         String now = format.format(new Date());
         List<Flight> flights = new LinkedList<Flight>();
@@ -59,6 +60,9 @@ public class FlightServiceMockImpl implements FlightService {
         otherToMexico.setStops(3);
         flights.add(toMexico);
         flights.add(otherToMexico);
-        return flights;
+        Schedule schedule = new Schedule();
+        schedule.setDepartureFlights(flights);
+        schedule.setArrivalFlights(flights);
+        return schedule;
     }
 }
