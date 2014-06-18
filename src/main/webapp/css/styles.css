@@ -7,6 +7,15 @@ body{
 div.ui-datepicker{
  font-size: 13px;
 }
+#sidebar{
+  margin-bottom: 20px;
+}
 .date-picker{
   height: 21px;
+}
+#results{
+  padding-left: 10px;
+}
+.result{
+  margin-bottom: 20px;
 }

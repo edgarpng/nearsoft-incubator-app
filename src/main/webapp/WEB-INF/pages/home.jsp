@@ -32,19 +32,45 @@
         <input type="submit" value="Find!" {{action 'search'}}>
       </div>
       <div id="results">
-        <ul>
           {{#each flight in results}}
-            <li>Flight number {{flight.id}} by {{flight.carrierFsCode}}.
-            {{#if flight.stops}}
-              {{flight.stops}} stops.
-            {{else}}
-              Nonstop.
-            {{/if}}
-            Arriving at terminal {{flight.arrivalTerminal}}</li>
+            <div class="result">
+              <table>
+                <tr>
+                  <td><b>Flight number:</b></td>
+                  <td>{{flight.id}}</td>
+                </tr>
+                <tr>
+                  <td><b>Airline:</b></td>
+                  <td>{{flight.carrierFsCode}}</td>
+                </tr>
+                <tr>
+                  <td><b>Departure:</b></td>
+                  <td>{{flight.departureTime}} from {{flight.departureAirportFsCode}}</td>
+                </tr>
+                <tr>
+                  <td><b>Arrival:</b></td>
+                  <td>
+                    {{flight.arrivalTime}} to {{flight.arrivalAirportFsCode}}
+                    {{#if flight.arrivalTerminal}}
+                       at terminal {{flight.arrivalTerminal}}
+                    {{/if}}
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>Stops:</b></td>
+                  <td>
+                    {{#if flight.stops}}
+                      {{flight.stops}}
+                    {{else}}
+                      Nonstop.
+                    {{/if}}
+                  </td>
+                </tr>
+              </table>
+            </div>
           {{else}}
             Sorry, no flights were found. Please try a different set of dates.
           {{/each}}
-        </ul>
       </div>
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

@@ -62,6 +62,9 @@
       },
       updateResults: function(search){
         var results = this.store.find('flight', search);
+        results.then(function(data){
+          window.flights = data;
+        });
         this.set('results', results);
       }
     });
@@ -74,8 +77,10 @@
 
     //Ember Models
     App.Flight = DS.Model.extend({
-      departureDate: DS.attr('string'),
-      arrivalDate: DS.attr('string'),
+      departureTime: DS.attr('date'),
+      arrivalTime: DS.attr('date'),
+      departureAirportFsCode: DS.attr('string'),
+      arrivalAirportFsCode: DS.attr('string'),
       carrierFsCode: DS.attr('string'),
       arrivalTerminal: DS.attr('string'),
       flightNumber: DS.attr('string'),

@@ -2,16 +2,17 @@ package com.nearsoft.incubator.bo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import java.util.Date;
-
 /**
  * Created by edgar on 5/06/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Flight {
 
-    private Date departureDate;
-    private Date arrivalDate;
+    //Timestamps are kept as String to avoid unnecessary parsing
+    private String departureTime;
+    private String arrivalTime;
+    private String departureAirportFsCode;
+    private String arrivalAirportFsCode;
     private String carrierFsCode;
     private String arrivalTerminal;
     private String flightNumber;
@@ -21,20 +22,36 @@ public class Flight {
         return this.flightNumber;
     }
 
-    public Date getDepartureDate() {
-        return departureDate;
+    public String getDepartureTime() {
+        return departureTime;
     }
 
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
     }
 
-    public Date getArrivalDate() {
-        return arrivalDate;
+    public String getArrivalTime() {
+        return arrivalTime;
     }
 
-    public void setArrivalDate(Date arrivalDate) {
-        this.arrivalDate = arrivalDate;
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public String getDepartureAirportFsCode() {
+        return departureAirportFsCode;
+    }
+
+    public void setDepartureAirportFsCode(String departureAirportFsCode) {
+        this.departureAirportFsCode = departureAirportFsCode;
+    }
+
+    public String getArrivalAirportFsCode() {
+        return arrivalAirportFsCode;
+    }
+
+    public void setArrivalAirportFsCode(String arrivalAirportFsCode) {
+        this.arrivalAirportFsCode = arrivalAirportFsCode;
     }
 
     public String getCarrierFsCode() {

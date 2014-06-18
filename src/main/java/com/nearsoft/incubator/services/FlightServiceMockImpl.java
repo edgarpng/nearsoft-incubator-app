@@ -4,6 +4,7 @@ import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,19 +40,21 @@ public class FlightServiceMockImpl implements FlightService {
 
     @Override
     public List<Flight> getFlightsByRoute(String fromAirport, String toAirport, Date leavingDate, Date returnDate) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        String now = format.format(new Date());
         List<Flight> flights = new LinkedList<Flight>();
         Flight toMexico = new Flight();
         toMexico.setArrivalTerminal("2");
-        toMexico.setArrivalDate(new Date());
+        toMexico.setArrivalTime(now);
         toMexico.setCarrierFsCode("AA");
-        toMexico.setDepartureDate(new Date());
+        toMexico.setDepartureTime(now);
         toMexico.setFlightNumber("200");
         toMexico.setStops(2);
         Flight otherToMexico = new Flight();
         otherToMexico.setArrivalTerminal("1");
-        otherToMexico.setArrivalDate(new Date());
+        otherToMexico.setArrivalTime(now);
         otherToMexico.setCarrierFsCode("VO");
-        otherToMexico.setDepartureDate(new Date());
+        otherToMexico.setDepartureTime(now);
         otherToMexico.setFlightNumber("312");
         otherToMexico.setStops(3);
         flights.add(toMexico);
