@@ -8,6 +8,7 @@ public class FlightApiConfiguration {
     private String appKey;
     private String appId;
     private String airportsUrl;
+    private String airlinesUrl;
     private String departingFlightsUrl;
     private String arrivingFlightsUrl;
 
@@ -21,6 +22,10 @@ public class FlightApiConfiguration {
 
     public String getAirportsUrl() {
         return airportsUrl;
+    }
+
+    public String getAirlinesUrl() {
+        return airlinesUrl;
     }
 
     public String getDepartingFlightsUrl() {
@@ -41,6 +46,10 @@ public class FlightApiConfiguration {
 
     public void setAirportsUrl(String airportsUrl) {
         this.airportsUrl = airportsUrl;
+    }
+
+    public void setAirlinesUrl(String airlinesUrl) {
+        this.airlinesUrl = airlinesUrl;
     }
 
     public void setDepartingFlightsUrl(String departingFlightsUrl) {

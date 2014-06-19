@@ -1,5 +1,6 @@
 package com.nearsoft.incubator.services;
 
+import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
@@ -23,20 +24,29 @@ public class FlightServiceImpl implements FlightService {
     private RestTemplate restTemplate;
     @Autowired
     @Qualifier("apiConfiguration")
-    FlightApiConfiguration configuration;
+    private FlightApiConfiguration configuration;
 
     @Override
     @Cacheable("airports")
     public List<Airport> getAllAirports() {
-        Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("appId", configuration.getAppId());
-        parameters.put("appKey", configuration.getAppKey());
+        Map<String, String> parameters = getCommonApiParameters();
         return restTemplate.getForObject(configuration.getAirportsUrl(), AirportsResponse.class, parameters).getAirports();
     }
 
     @Override
+    @Cacheable("airlines")
+    public Map<String, Airline> getAirlinesMap() {
+        Map<String, String> parameters = getCommonApiParameters();
+        List<Airline> airlines = restTemplate.getForObject(configuration.getAirlinesUrl(), AirlinesResponse.class, parameters).getAirlines();
+        Map<String, Airline> airlinesMap = new HashMap<>(airlines.size());
+        for(Airline airline : airlines){
+            airlinesMap.put(airline.getFs(), airline);
+        }
+        return airlinesMap;
+    }
+
+    @Override
     public Schedule getScheduleByRoute(String departureAirport, String arrivalAirport, Date departure, Date arrival) {
-        //TODO: Cache the two methods
         List<Flight> departureFlights = getDepartureFlights(departureAirport, arrivalAirport, departure);
         List<Flight> arrivalFlights = getArrivalFlights(arrivalAirport, departureAirport, arrival);
         Schedule schedule = new Schedule();
@@ -56,9 +66,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     private List<Flight> callScheduleApi(String url, String fromAirport, String toAirport, Date date){
-        Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("appId", configuration.getAppId());
-        parameters.put("appKey", configuration.getAppKey());
+        Map<String, String> parameters = getCommonApiParameters();
         parameters.put("departureAirport", fromAirport);
         parameters.put("arrivalAirport", toAirport);
         Calendar calendar = Calendar.getInstance();
@@ -67,6 +75,13 @@ public class FlightServiceImpl implements FlightService {
         parameters.put("month", calendar.get(Calendar.MONTH) + 1 + "");//Calendar month is zero-based (wtf?)
         parameters.put("day", calendar.get(Calendar.DAY_OF_MONTH) + "");
         return restTemplate.getForObject(url, FlightsResponse.class, parameters).getScheduledFlights();
+    }
+
+    private Map<String, String> getCommonApiParameters(){
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("appId", configuration.getAppId());
+        parameters.put("appKey", configuration.getAppKey());
+        return parameters;
     }
 
     /**
@@ -83,6 +98,23 @@ public class FlightServiceImpl implements FlightService {
 
         public void setAirports(List<Airport> airports){
             this.airports = airports;
+        }
+    }
+
+    /**
+     * Wrapper for the Airlines API responses
+     */
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class AirlinesResponse{
+
+        private List<Airline> airlines;
+
+        public List<Airline> getAirlines() {
+            return airlines;
+        }
+
+        public void setAirlines(List<Airline> airlines) {
+            this.airlines = airlines;
         }
     }
 

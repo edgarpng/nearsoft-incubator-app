@@ -16,6 +16,7 @@ public class Flight {
     private String carrierFsCode;
     private String arrivalTerminal;
     private String flightNumber;
+    private Airline airline;
     private int stops;
 
     public String getId() {
@@ -84,5 +85,13 @@ public class Flight {
 
     public void setStops(int stops) {
         this.stops = stops;
+    }
+
+    public Airline getAirline() {
+        return airline;
+    }
+
+    public void setAirline(Airline airline) {
+        this.airline = airline;
     }
 }

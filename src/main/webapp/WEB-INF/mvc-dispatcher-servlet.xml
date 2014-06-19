@@ -4,6 +4,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -54,9 +55,8 @@
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="airports"/>
-                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="airports" />
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="airlines" />
             </set>
         </property>
     </bean>
@@ -66,6 +66,7 @@
         <property name="appId" value="9a08398d" />
         <property name="appKey" value="d13a463da989d36d66a3b26ecb5c2a6b" />
         <property name="airportsUrl" value="https://api.flightstats.com/flex/airports/rest/v1/json/active?appId={appId}&amp;appKey={appKey}" />
+        <property name="airlinesUrl" value="https://api.flightstats.com/flex/airlines/rest/v1/json/active?appId={appId}&amp;appKey={appKey}" />
         <property name="departingFlightsUrl" value="https://api.flightstats.com/flex/schedules/rest/v1/json/from/{departureAirport}/to/{arrivalAirport}/departing/{year}/{month}/{day}?appId={appId}&amp;appKey={appKey}" />
         <property name="arrivingFlightsUrl" value="https://api.flightstats.com/flex/schedules/rest/v1/json/from/{departureAirport}/to/{arrivalAirport}/arriving/{year}/{month}/{day}?appId={appId}&amp;appKey={appKey}" />
     </bean>

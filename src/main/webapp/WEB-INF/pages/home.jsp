@@ -43,7 +43,7 @@
                 </tr>
                 <tr>
                   <td><b>Airline:</b></td>
-                  <td>{{flight.carrierFsCode}}</td>
+                  <td>{{flight.airline.name}}</td>
                 </tr>
                 <tr>
                   <td><b>Departure:</b></td>
@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
                   <td><b>Airline:</b></td>
-                  <td>{{flight.carrierFsCode}}</td>
+                  <td>{{flight.airline.name}}</td>
                 </tr>
                 <tr>
                   <td><b>Departure:</b></td>
