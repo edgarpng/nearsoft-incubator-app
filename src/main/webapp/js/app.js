@@ -42,7 +42,11 @@
           });
         })
       }
-    })
+    });
+    //Datetime pretty-printer helper for Handlebars
+    Ember.Handlebars.registerBoundHelper('formatTime', function(date){
+      return moment(date).format('MMMM Do, h:mm a');
+    });
 
     //Ember Routes
     App.Router.map(function(){

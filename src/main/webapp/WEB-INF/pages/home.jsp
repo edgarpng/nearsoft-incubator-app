@@ -47,14 +47,14 @@
                 </tr>
                 <tr>
                   <td><b>Departure:</b></td>
-                  <td>{{flight.departureTime}} from {{flight.departureAirportFsCode}}</td>
+                  <td>{{formatTime flight.departureTime}}</td>
                 </tr>
                 <tr>
                   <td><b>Arrival:</b></td>
                   <td>
-                    {{flight.arrivalTime}} to {{flight.arrivalAirportFsCode}}
+                    {{formatTime flight.arrivalTime}}
                     {{#if flight.arrivalTerminal}}
-                       at terminal {{flight.arrivalTerminal}}
+                       at Terminal {{flight.arrivalTerminal}}
                     {{/if}}
                   </td>
                 </tr>
@@ -64,7 +64,7 @@
                     {{#if flight.stops}}
                       {{flight.stops}}
                     {{else}}
-                      Nonstop.
+                      Nonstop
                     {{/if}}
                   </td>
                 </tr>
@@ -86,14 +86,14 @@
                 </tr>
                 <tr>
                   <td><b>Departure:</b></td>
-                  <td>{{flight.departureTime}} from {{flight.departureAirportFsCode}}</td>
+                  <td>{{formatTime flight.departureTime}}</td>
                 </tr>
                 <tr>
                   <td><b>Arrival:</b></td>
                   <td>
-                    {{flight.arrivalTime}} to {{flight.arrivalAirportFsCode}}
+                    {{formatTime flight.arrivalTime}}
                     {{#if flight.arrivalTerminal}}
-                       at terminal {{flight.arrivalTerminal}}
+                       at Terminal {{flight.arrivalTerminal}}
                     {{/if}}
                   </td>
                 </tr>
@@ -103,7 +103,7 @@
                     {{#if flight.stops}}
                       {{flight.stops}}
                     {{else}}
-                      Nonstop.
+                      Nonstop
                     {{/if}}
                   </td>
                 </tr>
@@ -120,6 +120,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/1.3.0/ember.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.7/ember-data.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
     <script src="/js/select2.min.js"></script>
     <script src="/js/app.js"></script>
   </body>
