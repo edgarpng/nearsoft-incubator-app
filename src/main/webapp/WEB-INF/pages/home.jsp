@@ -35,84 +35,53 @@
         {{#if schedule.travelPossible}}
           <h3>Departure:</h3>
           {{#each flight in schedule.departureFlights}}
-            <div class="result">
-              <table>
-                <tr>
-                  <td><b>Flight number:</b></td>
-                  <td>{{flight.id}}</td>
-                </tr>
-                <tr>
-                  <td><b>Airline:</b></td>
-                  <td>{{flight.airline.name}}</td>
-                </tr>
-                <tr>
-                  <td><b>Departure:</b></td>
-                  <td>{{formatTime flight.departureTime}}</td>
-                </tr>
-                <tr>
-                  <td><b>Arrival:</b></td>
-                  <td>
-                    {{formatTime flight.arrivalTime}}
-                    {{#if flight.arrivalTerminal}}
-                       at Terminal {{flight.arrivalTerminal}}
-                    {{/if}}
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>Stops:</b></td>
-                  <td>
-                    {{#if flight.stops}}
-                      {{flight.stops}}
-                    {{else}}
-                      Nonstop
-                    {{/if}}
-                  </td>
-                </tr>
-              </table>
-            </div>
+            {{render "flight" flight}}
           {{/each}}
 
           <h3>Return:</h3>
           {{#each flight in schedule.arrivalFlights}}
-            <div class="result">
-              <table>
-                <tr>
-                  <td><b>Flight number:</b></td>
-                  <td>{{flight.id}}</td>
-                </tr>
-                <tr>
-                  <td><b>Airline:</b></td>
-                  <td>{{flight.airline.name}}</td>
-                </tr>
-                <tr>
-                  <td><b>Departure:</b></td>
-                  <td>{{formatTime flight.departureTime}}</td>
-                </tr>
-                <tr>
-                  <td><b>Arrival:</b></td>
-                  <td>
-                    {{formatTime flight.arrivalTime}}
-                    {{#if flight.arrivalTerminal}}
-                       at Terminal {{flight.arrivalTerminal}}
-                    {{/if}}
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>Stops:</b></td>
-                  <td>
-                    {{#if flight.stops}}
-                      {{flight.stops}}
-                    {{else}}
-                      Nonstop
-                    {{/if}}
-                  </td>
-                </tr>
-              </table>
-            </div>
+            {{render "flight" flight}}
           {{/each}}
         {{else}}
             Sorry, no flights were found. Please try a different set of dates.
         {{/if}}
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="flight">
+      <div class="result">
+        <table>
+          <tr>
+            <td><b>Flight number:</b></td>
+            <td>{{flight.id}}</td>
+          </tr>
+          <tr>
+            <td><b>Airline:</b></td>
+            <td>{{flight.airline.name}}</td>
+          </tr>
+          <tr>
+            <td><b>Departure:</b></td>
+            <td>{{formatTime flight.departureTime}}</td>
+          </tr>
+          <tr>
+            <td><b>Arrival:</b></td>
+            <td>
+              {{formatTime flight.arrivalTime}}
+              {{#if flight.arrivalTerminal}}
+                 at Terminal {{flight.arrivalTerminal}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td><b>Stops:</b></td>
+            <td>
+              {{#if flight.stops}}
+                {{flight.stops}}
+              {{else}}
+                Nonstop
+              {{/if}}
+            </td>
+          </tr>
+        </table>
       </div>
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
