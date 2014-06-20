@@ -19,31 +19,38 @@
         <h1 class="logo">FlightFinder</h1>
         <h3>Your reliable source for flight information.</h3>
       </div>
+      <div id="sidebar">
+        {{partial "form"}}
+      </div>
       <div id="content">
         {{outlet}}
       </div>
     </script>
+    <script type="text/x-handlebars" data-template-name="_form">
+      {{input type="hidden" class="airport-picker" placeholder="From city" value=departureAirport}}
+      {{input type="hidden" class="airport-picker" placeholder="To city" value=arrivalAirport}}
+      {{input type="text" class="date-picker" name="departureDate" placeholder="Departure date" value=departureDate}}
+      {{input type="text" class="date-picker" name="arrivalDate" placeholder="Arrival date" value=arrivalDate}}
+      <input type="submit" value="Find!" {{action 'search'}}>
+    </script>
     <script type="text/x-handlebars" data-template-name="search">
-      <div id="sidebar">
-        {{input type="hidden" class="airport-picker" placeholder="From city" value=departureAirport}}
-        {{input type="hidden" class="airport-picker" placeholder="To city" value=arrivalAirport}}
-        {{input type="text" class="date-picker" name="departureDate" placeholder="Departure date" value=departureDate}}
-        {{input type="text" class="date-picker" name="arrivalDate" placeholder="Arrival date" value=arrivalDate}}
-        <input type="submit" value="Find!" {{action 'search'}}>
-      </div>
       <div id="results">
-        {{#if schedule.travelPossible}}
+        {{#if schedule}}
           <h3>Departure:</h3>
           {{#each flight in schedule.departureFlights}}
             {{render "flight" flight}}
+          {{else}}
+            Could not find fights on that date.
           {{/each}}
 
           <h3>Return:</h3>
           {{#each flight in schedule.arrivalFlights}}
             {{render "flight" flight}}
+          {{else}}
+            Could not find flights on that date.
           {{/each}}
         {{else}}
-            Sorry, no flights were found. Please try a different set of dates.
+            Loading...
         {{/if}}
       </div>
     </script>

@@ -52,29 +52,42 @@
     App.Router.map(function(){
       this.resource('search', {path: '/search/:departureAirport/:arrivalAirport/:departureDate/:arrivalDate'});
     });
+    App.ApplicationRoute = Ember.Route.extend({
+      setupController: function(controller){
+        controller.set('model', {});
+      }
+    });
+    App.SearchRoute = Ember.Route.extend({
+      setupController: function(controller, search) {
+        var applicationController = controller.get('applicationController');
+        applicationController.set('model', search);
+        controller.set('model', search);
+        controller.updateSchedule(search);
+      }
+    });
 
     //Ember Controllers
-    App.ApplicationController = Ember.Controller.extend({});
-    App.SearchController = Ember.ObjectController.extend({
-      schedule: null,
+    App.ApplicationController = Ember.ObjectController.extend({
+      needs: 'search',
+      searchController: Ember.computed.alias('controllers.search'),
       actions: {
         search: function(){
           var search = this.get('model');
-          this.updateSchedule(search);
+          var searchController = this.get('searchController');
           this.transitionToRoute('search', search);
+          searchController.updateSchedule(search);
         }
-      },
+      }
+    });
+    App.SearchController = Ember.ObjectController.extend({
+      needs: 'application',
+      applicationController: Ember.computed.alias('controllers.application'),
+      schedule: null,
       updateSchedule: function(search){
         var schedule = DS.PromiseObject.create({
           promise: $.getJSON('/schedules', $.param(search))
         });
         this.set('schedule', schedule);
-      }
-    });
-    App.SearchRoute = Ember.Route.extend({
-      setupController: function(controller, search) {
-        controller.set('model', search);
-        controller.updateSchedule(search);
       }
     });
 }());
