@@ -32,8 +32,4 @@ public class Schedule {
     public void setArrivalFlights(List<Flight> returnFlights) {
         this.arrivalFlights = returnFlights;
     }
-
-    public boolean isTravelPossible(){
-        return !this.departureFlights.isEmpty() && !this.arrivalFlights.isEmpty();
-    }
 }
