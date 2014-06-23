@@ -4,6 +4,7 @@ import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.util.Airlines;
 import com.nearsoft.incubator.util.FlightApiConfiguration;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,12 @@ public class FlightServiceImpl implements FlightService {
         return restTemplate.getForObject(configuration.getAirportsUrl(), AirportsResponse.class, parameters).getAirports();
     }
 
-    @Override
     @Cacheable("airlines")
+    @Override
     public Map<String, Airline> getAirlinesMap() {
         Map<String, String> parameters = getCommonApiParameters();
         List<Airline> airlines = restTemplate.getForObject(configuration.getAirlinesUrl(), AirlinesResponse.class, parameters).getAirlines();
-        Map<String, Airline> airlinesMap = new HashMap<>(airlines.size());
-        for(Airline airline : airlines){
-            airlinesMap.put(airline.getFs(), airline);
-        }
-        return airlinesMap;
+        return Airlines.toAirlinesMap(airlines);
     }
 
     @Override

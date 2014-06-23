@@ -3,6 +3,7 @@ package com.nearsoft.incubator.controllers;
 import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.dao.AirlinesDao;
 import com.nearsoft.incubator.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,24 +27,36 @@ public class SchedulesController extends BaseController {
     @Autowired
     @Qualifier("flightServiceImpl")
     private FlightService service;
+    @Autowired
+    @Qualifier("jdbcAirlinesDao")
+    private AirlinesDao airlinesDao;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirport,
                                                                @RequestParam("arrivalAirport") String arrivalAirport,
                                                                @RequestParam("departureDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date departureDate,
                                                                @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date arrivalDate){
-        Schedule schedule =  service.getScheduleByRoute(departureAirport, arrivalAirport, departureDate, arrivalDate);
-        //Decorate each flight with an Airline object with name
-        setAirlineOnFlights(schedule.getDepartureFlights());
-        setAirlineOnFlights(schedule.getArrivalFlights());
+        Schedule schedule = service.getScheduleByRoute(departureAirport, arrivalAirport, departureDate, arrivalDate);
+        //Add the corresponding Airline object for every flight
+        Map<String, Airline> airlinesMap = getAirlinesMap();
+        setAirlineOnFlights(schedule.getDepartureFlights(), airlinesMap);
+        setAirlineOnFlights(schedule.getArrivalFlights(), airlinesMap);
         return schedule;
     }
 
-    private void setAirlineOnFlights(List<Flight> flights){
-        Map<String, Airline> airlinesMap = service.getAirlinesMap();
+    private void setAirlineOnFlights(List<Flight> flights, Map<String, Airline> airlinesMap){
         for(Flight flight: flights){
             Airline airline = airlinesMap.get(flight.getCarrierFsCode());
             flight.setAirline(airline);
         }
+    }
+
+    private Map<String, Airline> getAirlinesMap(){
+        Map<String, Airline> airlines = airlinesDao.getAirlinesMap();
+        if(airlines.isEmpty()){
+            airlines = service.getAirlinesMap();
+            airlinesDao.save(airlines);
+        }
+        return airlines;
     }
 }
