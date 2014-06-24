@@ -37,7 +37,7 @@
       <section id="results">
         {{#if schedule}}
           <h3 class="results-header">Departure:</h3>
-          <table class="table">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th>Flight #</th>
@@ -55,7 +55,7 @@
           </table>
 
           <h3 class="results-header">Return:</h3>
-          <table class="table">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th>Flight #</th>
@@ -72,7 +72,10 @@
             {{/each}}
           </table>
         {{else}}
-            Loading...
+          <div class="loading">
+            <div>Finding your flights...</div>
+            <img src="/images/large-spinner.gif" />
+          </div>
         {{/if}}
       </section>
     </script>
