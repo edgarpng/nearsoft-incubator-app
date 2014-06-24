@@ -75,6 +75,7 @@
           var search = this.get('model');
           var searchController = this.get('searchController');
           this.transitionToRoute('search', search);
+          //TODO: This probably should not be here. Find the appropiate way to do it
           $('#main-header').addClass('short');
           searchController.updateSchedule(search);
         }

@@ -36,7 +36,11 @@
     <script type="text/x-handlebars" data-template-name="search">
       <section id="results">
         {{#if schedule}}
-          <h3 class="results-header">Departure</h3>
+          <div class="results-header departure-header">
+            <h3>Departure</h3>
+            <h4>{{departureAirport}} to {{arrivalAirport}}</h4>
+          </div>
+          <hr>
           <table class="table table-hover">
             {{partial "table-head"}}
             {{#each flight in schedule.departureFlights}}
@@ -45,8 +49,11 @@
               {{partial "no-results"}}
             {{/each}}
           </table>
-
-          <h3 class="results-header">Return</h3>
+          <div class="results-header arrival-header">
+            <h3>Return</h3>
+            <h4>{{arrivalAirport}} to {{departureAirport}}</h4>
+          </div>
+          <hr>
           <table class="table table-hover">
             {{partial "table-head"}}
             {{#each flight in schedule.arrivalFlights}}
