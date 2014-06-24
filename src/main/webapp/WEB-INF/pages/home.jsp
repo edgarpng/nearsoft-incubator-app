@@ -36,46 +36,27 @@
     <script type="text/x-handlebars" data-template-name="search">
       <section id="results">
         {{#if schedule}}
-          <h3 class="results-header">Departure:</h3>
+          <h3 class="results-header">Departure</h3>
           <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Flight #</th>
-                <th>Carrier</th>
-                <th>Departure from {{departureAirport}}</th>
-                <th>Arrival to {{arrivalAirport}}</th>
-                <th>Stops</th>
-              </tr>
-            </thead>
+            {{partial "table-head"}}
             {{#each flight in schedule.departureFlights}}
               {{render "flight" flight}}
             {{else}}
-              <tr><td colspan="5">Could not find fights on that date.</td></tr>
+              {{partial "no-results"}}
             {{/each}}
           </table>
 
-          <h3 class="results-header">Return:</h3>
+          <h3 class="results-header">Return</h3>
           <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Flight #</th>
-                <th>Carrier</th>
-                <th>Departure from {{arrivalAirport}}</th>
-                <th>Arrival to {{departureAirport}}</th>
-                <th>Stops</th>
-              </tr>
-            </thead>
+            {{partial "table-head"}}
             {{#each flight in schedule.arrivalFlights}}
               {{render "flight" flight}}
             {{else}}
-              <tr><td colspan="5">Could not find fights on that date.</td></tr>
+              {{partial "no-results"}}
             {{/each}}
           </table>
         {{else}}
-          <div class="loading">
-            <div>Finding your flights...</div>
-            <img src="/images/large-spinner.gif" />
-          </div>
+          {{partial "loading"}}
         {{/if}}
       </section>
     </script>
@@ -98,6 +79,28 @@
           {{/if}}
         </td>
       </tr>
+    </script>
+    <script type="text/x-handlebars" data-template-name="_table-head">
+      <thead>
+        <tr>
+          <th>Flight #</th>
+          <th>Carrier</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Stops</th>
+        </tr>
+      </thead>
+    </script>
+    <script type="text/x-handlebars" data-template-name="_no-results">
+      <tr>
+        <td colspan="5">Could not find flights on that date.</td>
+      </tr>
+    </script>
+    <script type="text/x-handlebars" data-template-name="_loading">
+      <div class="loading">
+        <div>Finding your flights...</div>
+        <img src="/images/large-spinner.gif" />
+      </div>
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
