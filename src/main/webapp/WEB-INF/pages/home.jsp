@@ -15,10 +15,10 @@
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="application">
-      <header id="main-header">
+      {{#link-to "search" tagName="header" href=false id="main-header"}}
         <h1 class="logo">FlightFinder</h1>
         <h3>Your reliable source for flight information.</h3>
-      </header>
+      {{/link-to}}
       <form id="main-form" class="form-inline">
         {{partial "form"}}
       </form>

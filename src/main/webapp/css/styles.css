@@ -10,7 +10,7 @@ header{
   text-align: center;
   background: #22697F url('/images/clouds.png') no-repeat bottom;
 }
-#main-header.short{
+#main-header.active{
   -webkit-transition: height 1s;
   transition: height 1s;
   height: 150px;
@@ -22,7 +22,7 @@ header{
   font-size: 50px;
   font-weight: bold;
 }
-#main-header.short .logo{
+#main-header.active .logo{
   -webkit-transition: padding-top 1s;
   transition: padding-top 1s;
   padding-top: 240px;
