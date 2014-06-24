@@ -20,6 +20,7 @@ header{
   margin: auto;
   padding-top: 90px;
   font-size: 50px;
+  font-weight: bold;
 }
 #main-header.short .logo{
   -webkit-transition: padding-top 1s;
