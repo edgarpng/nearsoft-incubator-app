@@ -75,6 +75,7 @@
           var search = this.get('model');
           var searchController = this.get('searchController');
           this.transitionToRoute('search', search);
+          $('#main-header').addClass('short');
           searchController.updateSchedule(search);
         }
       }

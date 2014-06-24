@@ -1,21 +1,65 @@
-body{
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-.logo{
+/*General*/
+header{
   font-family: 'Open Sans', sans-serif;
+  background: #22697F;
+  color: white;
 }
-div.ui-datepicker{
- font-size: 13px;
+/*Index*/
+#main-header{
+  height: 350px;
+  text-align: center;
+  background: #22697F url('/images/clouds.png') no-repeat bottom;
 }
-#sidebar{
-  margin-bottom: 20px;
+#main-header.short{
+  -webkit-transition: height 1s;
+  transition: height 1s;
+  height: 150px;
+  overflow: hidden;
 }
-.date-picker{
-  height: 21px;
+#main-header .logo{
+  margin: auto;
+  padding-top: 90px;
+  font-size: 50px;
 }
+#main-header.short .logo{
+  -webkit-transition: padding-top 1s;
+  transition: padding-top 1s;
+  padding-top: 240px;
+}
+#main-form{
+  width: 1100px;
+  margin: auto;
+  margin-top: 60px;
+}
+#content{
+  width: 1100px;
+  margin: auto;
+  margin-top: 50px;
+}
+/*Search*/
 #results{
   padding-left: 10px;
 }
 .result{
   margin-bottom: 20px;
+}
+.results-header{
+  font-size: 28px;
+  color: #66A5B7;
+  margin: 30px 0;
+  padding: 20px 0;
+  border-bottom: 1px solid #D2FA08;
+}
+/*Plugin styles*/
+div.ui-datepicker{
+ font-size: 13px;
+}
+.select2-results .select2-no-results{
+  font-size: 12px;
+  font-weight: bold;
+  background: white;
+}
+.select2-container .select2-choice{
+  height: 34px;
+  line-height: 33px;
 }

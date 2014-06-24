@@ -7,89 +7,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Your reliable source for flight information">
     <title>FlightFinder Search</title>
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet" type="text/css">
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" rel="stylesheet"/>
-    <link href="/css/normalize.css" rel="stylesheet" type="text/css">
-    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/select2.css" rel="stylesheet" type="text/css">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="application">
-      <div id="header">
+      <header id="main-header">
         <h1 class="logo">FlightFinder</h1>
         <h3>Your reliable source for flight information.</h3>
-      </div>
-      <div id="sidebar">
+      </header>
+      <form id="main-form" class="form-inline">
         {{partial "form"}}
-      </div>
-      <div id="content">
+      </form>
+      <section id="content">
         {{outlet}}
-      </div>
+      </section>
     </script>
     <script type="text/x-handlebars" data-template-name="_form">
       {{input type="hidden" class="airport-picker" placeholder="From city" value=departureAirport}}
       {{input type="hidden" class="airport-picker" placeholder="To city" value=arrivalAirport}}
-      {{input type="text" class="date-picker" name="departureDate" placeholder="Departure date" value=departureDate}}
-      {{input type="text" class="date-picker" name="arrivalDate" placeholder="Arrival date" value=arrivalDate}}
-      <input type="submit" value="Find!" {{action 'search'}}>
+      {{input type="text" class="date-picker form-control" name="departureDate" placeholder="Departure date" value=departureDate}}
+      {{input type="text" class="date-picker form-control" name="arrivalDate" placeholder="Arrival date" value=arrivalDate}}
+      <input type="submit" value="Find!" class="btn btn-primary" {{action 'search'}}>
     </script>
     <script type="text/x-handlebars" data-template-name="search">
-      <div id="results">
+      <section id="results">
         {{#if schedule}}
-          <h3>Departure:</h3>
-          {{#each flight in schedule.departureFlights}}
-            {{render "flight" flight}}
-          {{else}}
-            Could not find fights on that date.
-          {{/each}}
+          <h3 class="results-header">Departure:</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Flight #</th>
+                <th>Carrier</th>
+                <th>Departure from {{departureAirport}}</th>
+                <th>Arrival to {{arrivalAirport}}</th>
+                <th>Stops</th>
+              </tr>
+            </thead>
+            {{#each flight in schedule.departureFlights}}
+              {{render "flight" flight}}
+            {{else}}
+              <tr><td colspan="5">Could not find fights on that date.</td></tr>
+            {{/each}}
+          </table>
 
-          <h3>Return:</h3>
-          {{#each flight in schedule.arrivalFlights}}
-            {{render "flight" flight}}
-          {{else}}
-            Could not find flights on that date.
-          {{/each}}
+          <h3 class="results-header">Return:</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Flight #</th>
+                <th>Carrier</th>
+                <th>Departure from {{arrivalAirport}}</th>
+                <th>Arrival to {{departureAirport}}</th>
+                <th>Stops</th>
+              </tr>
+            </thead>
+            {{#each flight in schedule.arrivalFlights}}
+              {{render "flight" flight}}
+            {{else}}
+              <tr><td colspan="5">Could not find fights on that date.</td></tr>
+            {{/each}}
+          </table>
         {{else}}
             Loading...
         {{/if}}
-      </div>
+      </section>
     </script>
     <script type="text/x-handlebars" data-template-name="flight">
-      <div class="result">
-        <table>
-          <tr>
-            <td><b>Flight number:</b></td>
-            <td>{{flight.id}}</td>
-          </tr>
-          <tr>
-            <td><b>Airline:</b></td>
-            <td>{{flight.airline.name}}</td>
-          </tr>
-          <tr>
-            <td><b>Departure:</b></td>
-            <td>{{formatTime flight.departureTime}}</td>
-          </tr>
-          <tr>
-            <td><b>Arrival:</b></td>
-            <td>
-              {{formatTime flight.arrivalTime}}
-              {{#if flight.arrivalTerminal}}
-                 at Terminal {{flight.arrivalTerminal}}
-              {{/if}}
-            </td>
-          </tr>
-          <tr>
-            <td><b>Stops:</b></td>
-            <td>
-              {{#if flight.stops}}
-                {{flight.stops}}
-              {{else}}
-                Nonstop
-              {{/if}}
-            </td>
-          </tr>
-        </table>
-      </div>
+      <tr>
+        <td>{{flight.id}}</td>
+        <td>{{flight.airline.name}}</td>
+        <td>{{formatTime flight.departureTime}}</td>
+        <td>
+          {{formatTime flight.arrivalTime}}
+          {{#if flight.arrivalTerminal}}
+             at Terminal {{flight.arrivalTerminal}}
+          {{/if}}
+        </td>
+        <td>
+          {{#if flight.stops}}
+            {{flight.stops}}
+          {{else}}
+            Nonstop
+          {{/if}}
+        </td>
+      </tr>
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
