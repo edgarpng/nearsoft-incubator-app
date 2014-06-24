@@ -20,6 +20,7 @@ public class Flight {
     private int stops;
 
     public String getId() {
+        //Necessary for the front-end to identify single Flight objects
         return this.flightNumber;
     }
 

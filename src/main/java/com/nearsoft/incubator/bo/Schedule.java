@@ -12,9 +12,11 @@ public class Schedule {
 
     private List<Flight> departureFlights;
     private List<Flight> arrivalFlights;
+    //Necessary for the front-end to identify single Schedule objects
+    private static final int DEFAULT_ID = 1;
 
     public int getId(){
-        return 1;
+        return DEFAULT_ID;
     }
 
     public List<Flight> getDepartureFlights() {
