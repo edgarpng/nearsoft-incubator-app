@@ -2,6 +2,8 @@ package com.nearsoft.incubator.bo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.util.Date;
+
 /**
  * Created by edgar on 5/06/14.
  */
@@ -12,6 +14,7 @@ public class Airport {
     private String name;
     private String city;
     private String countryName;
+    private Date creationDate;
 
     public String getIata() {
         return iata;
@@ -43,5 +46,13 @@ public class Airport {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

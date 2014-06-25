@@ -12,4 +12,5 @@ import java.util.List;
 public interface AirportsDao {
     public List<Airport> getAllAirports();
     public void save(List<Airport> airports);
+    public void deleteAll();
 }

@@ -3,7 +3,7 @@ package com.nearsoft.incubator.controllers;
 import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
-import com.nearsoft.incubator.dao.AirlinesDao;
+import com.nearsoft.incubator.repositories.AirlinesRepository;
 import com.nearsoft.incubator.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,8 +28,8 @@ public class SchedulesController extends BaseController {
     @Qualifier("flightServiceImpl")
     private FlightService service;
     @Autowired
-    @Qualifier("jdbcAirlinesDao")
-    private AirlinesDao airlinesDao;
+    @Qualifier("airlinesRepositoryImpl")
+    private AirlinesRepository airlinesRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirport,
@@ -38,7 +38,7 @@ public class SchedulesController extends BaseController {
                                                                @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date arrivalDate){
         Schedule schedule = service.getScheduleByRoute(departureAirport, arrivalAirport, departureDate, arrivalDate);
         //Add the corresponding Airline object for every flight
-        Map<String, Airline> airlinesMap = getAirlinesMap();
+        Map<String, Airline> airlinesMap = airlinesRepository.getAirlinesMap();
         setAirlineOnFlights(schedule.getDepartureFlights(), airlinesMap);
         setAirlineOnFlights(schedule.getArrivalFlights(), airlinesMap);
         return schedule;
@@ -49,14 +49,5 @@ public class SchedulesController extends BaseController {
             Airline airline = airlinesMap.get(flight.getCarrierFsCode());
             flight.setAirline(airline);
         }
-    }
-
-    private Map<String, Airline> getAirlinesMap(){
-        Map<String, Airline> airlines = airlinesDao.getAirlinesMap();
-        if(airlines.isEmpty()){
-            airlines = service.getAirlinesMap();
-            airlinesDao.save(airlines);
-        }
-        return airlines;
     }
 }

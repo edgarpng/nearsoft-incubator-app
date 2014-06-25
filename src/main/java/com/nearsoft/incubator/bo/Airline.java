@@ -2,6 +2,8 @@ package com.nearsoft.incubator.bo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.util.Date;
+
 /**
  * Created by edgar on 18/06/14.
  */
@@ -11,6 +13,7 @@ public class Airline {
     private String name;
     //Internal identifier for FlightStats
     private String fs;
+    private Date creationDate;
 
     public String getName() {
         return name;
@@ -26,5 +29,13 @@ public class Airline {
 
     public void setFs(String fs) {
         this.fs = fs;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

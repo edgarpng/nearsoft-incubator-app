@@ -71,6 +71,16 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
+    <!-- Cache expiry for airports (in seconds) -->
+    <bean id="airportsRepositoryImpl" class="com.nearsoft.incubator.repositories.AirportsRepositoryImpl">
+        <property name="cacheExpiry" value="28800" />
+    </bean>
+
+    <!-- Cache expiry for airlines (in seconds) -->
+    <bean id="airlinesRepositoryImpl" class="com.nearsoft.incubator.repositories.AirlinesRepositoryImpl">
+        <property name="cacheExpiry" value="28800" />
+    </bean>
+
     <!-- Inject API configuration -->
     <jee:jndi-lookup id="apiConfiguration" expected-type="com.nearsoft.incubator.util.FlightApiConfiguration" jndi-name="bean/configuration"/>
 

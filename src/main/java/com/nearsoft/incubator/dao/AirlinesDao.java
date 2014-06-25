@@ -2,7 +2,6 @@ package com.nearsoft.incubator.dao;
 
 import com.nearsoft.incubator.bo.Airline;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,4 +10,5 @@ import java.util.Map;
 public interface AirlinesDao {
     public Map<String, Airline> getAirlinesMap();
     public void save(Map<String, Airline> airlines);
+    public void deleteAll();
 }
