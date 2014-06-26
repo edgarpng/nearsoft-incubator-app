@@ -14,8 +14,8 @@ import java.util.Map;
 /**
  * Created by edgar on 25/06/14.
  */
-@Component("hibernateAirlinesDao")
-public class AirlinesDaoHibernateImpl implements AirlinesDao {
+@Component("airlineDaoHibernateImpl")
+public class AirlineDaoHibernateImpl implements AirlineDao {
 
     @Autowired
     @Qualifier("sessionFactory")

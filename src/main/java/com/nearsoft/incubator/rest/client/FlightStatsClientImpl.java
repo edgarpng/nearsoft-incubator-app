@@ -1,11 +1,10 @@
-package com.nearsoft.incubator.services;
+package com.nearsoft.incubator.rest.client;
 
 import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
 import com.nearsoft.incubator.util.Airlines;
-import com.nearsoft.incubator.util.FlightApiConfiguration;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,14 +16,14 @@ import java.util.*;
 /**
  * Created by edgar on 12/06/14.
  */
-@Component("flightServiceImpl")
-public class FlightServiceImpl implements FlightService {
+@Component("flightStatsClientImpl")
+public class FlightStatsClientImpl implements FlightStatsClient {
 
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    @Qualifier("apiConfiguration")
-    private FlightApiConfiguration configuration;
+    @Qualifier("flightStatsClientConfiguration")
+    private FlightStatsClientConfiguration configuration;
 
     @Override
     public List<Airport> getAllAirports() {

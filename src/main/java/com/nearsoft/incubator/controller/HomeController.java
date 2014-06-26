@@ -1,4 +1,4 @@
-package com.nearsoft.incubator.controllers;
+package com.nearsoft.incubator.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

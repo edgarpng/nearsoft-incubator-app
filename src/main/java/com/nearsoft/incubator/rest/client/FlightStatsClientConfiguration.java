@@ -1,9 +1,9 @@
-package com.nearsoft.incubator.util;
+package com.nearsoft.incubator.rest.client;
 
 /**
  * Created by edgar on 13/06/14.
  */
-public class FlightApiConfiguration {
+public class FlightStatsClientConfiguration {
 
     private String appKey;
     private String appId;

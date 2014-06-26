@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Created by edgar on 16/06/14.
  */
-@Component("jdbcAirportsDao")
-public class AirportsDaoJdbcImpl extends JdbcDaoSupport implements AirportsDao {
+@Component("airportDaoJdbcImpl")
+public class AirportDaoJdbcImpl extends JdbcDaoSupport implements AirportDao {
 
     @Override
     public List<Airport> getAllAirports() {

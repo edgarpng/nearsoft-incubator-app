@@ -66,28 +66,29 @@
         </property>
     </bean>
 
-    <!-- Airports Dao -->
-    <bean id="jdbcAirportsDao" class="com.nearsoft.incubator.dao.AirportsDaoJdbcImpl">
+    <!-- Airport Dao -->
+    <bean id="airportDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirportDaoJdbcImpl">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- Airlines Dao -->
-    <bean id="jdbcAirlinesDao" class="com.nearsoft.incubator.dao.AirlinesDaoJdbcImpl">
+    <!-- Airline Dao -->
+    <bean id="airlineDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirlineDaoJdbcImpl">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
     <!-- Cache expiry for airports (in seconds) -->
-    <bean id="airportsManagerImpl" class="com.nearsoft.incubator.managers.AirportsManagerImpl">
+    <bean id="airportServiceImpl" class="com.nearsoft.incubator.service.AirportServiceImpl">
         <property name="cacheExpiry" value="3600" />
     </bean>
 
     <!-- Cache expiry for airlines (in seconds) -->
-    <bean id="airlinesManagerImpl" class="com.nearsoft.incubator.managers.AirlinesManagerImpl">
+    <bean id="airlineServiceImpl" class="com.nearsoft.incubator.service.AirlineServiceImpl">
         <property name="cacheExpiry" value="3600" />
     </bean>
 
     <!-- Inject API configuration -->
-    <jee:jndi-lookup id="apiConfiguration" expected-type="com.nearsoft.incubator.util.FlightApiConfiguration"
+    <jee:jndi-lookup id="flightStatsClientConfiguration"
+                     expected-type="com.nearsoft.incubator.rest.client.FlightStatsClientConfiguration"
                      jndi-name="bean/configuration"/>
 
     <!-- Database parameters -->

@@ -1,8 +1,8 @@
-package com.nearsoft.incubator.managers;
+package com.nearsoft.incubator.service;
 
 import com.nearsoft.incubator.bo.Airport;
-import com.nearsoft.incubator.dao.AirportsDao;
-import com.nearsoft.incubator.services.FlightService;
+import com.nearsoft.incubator.dao.AirportDao;
+import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,26 @@ import java.util.List;
 /**
  * Created by edgar on 24/06/14.
  */
-@Component("airportsManagerImpl")
-public class AirportsManagerImpl implements AirportsManager {
+@Component("airportServiceImpl")
+public class AirportServiceImpl implements AirportService {
 
     @Autowired
-    @Qualifier("flightServiceImpl")
-    private FlightService clientApi;
+    @Qualifier("flightStatsClientImpl")
+    private FlightStatsClient apiClient;
     @Autowired
-    @Qualifier("hibernateAirportsDao")
-    private AirportsDao airportsDao;
+    @Qualifier("airportDaoHibernateImpl")
+    private AirportDao airportDao;
     //Time (in seconds) allowed to use results from the database before updating it with data from the service
     private long cacheExpiry;
 
     @Override
     @Transactional
     public List<Airport> getAllAirports() {
-        List<Airport> airports = airportsDao.getAllAirports();
+        List<Airport> airports = airportDao.getAllAirports();
         if(airports.isEmpty() || isDataTooOld(airports)){
-            airports = clientApi.getAllAirports();
-            airportsDao.deleteAll();
-            airportsDao.save(airports);
+            airports = apiClient.getAllAirports();
+            airportDao.deleteAll();
+            airportDao.save(airports);
         }
         return airports;
     }

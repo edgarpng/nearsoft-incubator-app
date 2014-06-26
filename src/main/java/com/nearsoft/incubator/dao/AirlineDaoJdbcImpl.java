@@ -17,8 +17,8 @@ import java.util.Map;
 /**
  * Created by edgar on 20/06/14.
  */
-@Component("jdbcAirlinesDao")
-public class AirlinesDaoJdbcImpl extends JdbcDaoSupport implements AirlinesDao {
+@Component("airlineDaoJdbcImpl")
+public class AirlineDaoJdbcImpl extends JdbcDaoSupport implements AirlineDao {
 
     @Override
     public Map<String, Airline> getAirlinesMap() {

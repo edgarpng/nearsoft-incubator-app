@@ -1,10 +1,10 @@
-package com.nearsoft.incubator.controllers;
+package com.nearsoft.incubator.controller;
 
 import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
-import com.nearsoft.incubator.managers.AirlinesManager;
-import com.nearsoft.incubator.services.FlightService;
+import com.nearsoft.incubator.service.AirlineService;
+import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,23 +22,23 @@ import java.util.Map;
 @Controller
 @Component
 @RequestMapping("/schedules")
-public class SchedulesController extends BaseController {
+public class ScheduleController extends BaseController {
 
     @Autowired
-    @Qualifier("flightServiceImpl")
-    private FlightService service;
+    @Qualifier("flightStatsClientImpl")
+    private FlightStatsClient apiClient;
     @Autowired
-    @Qualifier("airlinesManagerImpl")
-    private AirlinesManager airlinesManager;
+    @Qualifier("airlineServiceImpl")
+    private AirlineService airlineService;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirportIataCode,
                                                                @RequestParam("arrivalAirport") String arrivalAirportIataCode,
                                                                @RequestParam("departureDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date departureDate,
                                                                @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date arrivalDate){
-        Schedule schedule = service.getScheduleByRoute(departureAirportIataCode, arrivalAirportIataCode, departureDate, arrivalDate);
+        Schedule schedule = apiClient.getScheduleByRoute(departureAirportIataCode, arrivalAirportIataCode, departureDate, arrivalDate);
         //Add the corresponding Airline object for every flight
-        Map<String, Airline> airlines = airlinesManager.getAirlinesMap();
+        Map<String, Airline> airlines = airlineService.getAirlinesMap();
         setAirlineOnFlights(schedule.getDepartureFlights(), airlines);
         setAirlineOnFlights(schedule.getArrivalFlights(), airlines);
         return schedule;

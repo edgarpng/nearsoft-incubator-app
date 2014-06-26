@@ -1,7 +1,7 @@
-package com.nearsoft.incubator.controllers;
+package com.nearsoft.incubator.controller;
 
 import com.nearsoft.incubator.bo.Airport;
-import com.nearsoft.incubator.managers.AirportsManager;
+import com.nearsoft.incubator.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -18,14 +18,14 @@ import java.util.List;
 @Controller
 @Component
 @RequestMapping("/airports")
-public class AirportsController extends BaseController{
+public class AirportController extends BaseController{
 
     @Autowired
-    @Qualifier("airportsManagerImpl")
-    private AirportsManager airportsManager;
+    @Qualifier("airportServiceImpl")
+    private AirportService airportService;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Airport> getAllAirports(){
-       return airportsManager.getAllAirports();
+       return airportService.getAllAirports();
     }
 }

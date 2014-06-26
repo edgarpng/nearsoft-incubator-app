@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * Created by edgar on 25/06/14.
  */
-@Component("hibernateAirportsDao")
-public class AirportsDaoHibernateImpl implements AirportsDao {
+@Component("airportDaoHibernateImpl")
+public class AirportDaoHibernateImpl implements AirportDao {
 
     @Autowired
     @Qualifier("sessionFactory")

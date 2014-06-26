@@ -1,8 +1,8 @@
-package com.nearsoft.incubator.managers;
+package com.nearsoft.incubator.service;
 
 import com.nearsoft.incubator.bo.Airline;
-import com.nearsoft.incubator.dao.AirlinesDao;
-import com.nearsoft.incubator.services.FlightService;
+import com.nearsoft.incubator.dao.AirlineDao;
+import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,26 @@ import java.util.Map;
 /**
  * Created by edgar on 24/06/14.
  */
-@Component("airlinesManagerImpl")
-public class AirlinesManagerImpl implements AirlinesManager {
+@Component("airlineServiceImpl")
+public class AirlineServiceImpl implements AirlineService {
 
     @Autowired
-    @Qualifier("flightServiceImpl")
-    private FlightService service;
+    @Qualifier("flightStatsClientImpl")
+    private FlightStatsClient apiClient;
     @Autowired
-    @Qualifier("hibernateAirlinesDao")
-    private AirlinesDao airlinesDao;
-    //Time (in seconds) allowed to use results from the database before updating it with data from the service
+    @Qualifier("airlineDaoHibernateImpl")
+    private AirlineDao airlineDao;
+    //Time (in seconds) allowed to use results from the database before updating it with data from the apiClient
     private long cacheExpiry;
 
     @Override
     @Transactional
     public Map<String, Airline> getAirlinesMap() {
-        Map<String, Airline> airlines = airlinesDao.getAirlinesMap();
+        Map<String, Airline> airlines = airlineDao.getAirlinesMap();
         if(airlines.isEmpty() || isDataTooOld(airlines)){
-            airlines = service.getAirlinesMap();
-            airlinesDao.deleteAll();
-            airlinesDao.save(airlines);
+            airlines = apiClient.getAirlinesMap();
+            airlineDao.deleteAll();
+            airlineDao.save(airlines);
         }
         return airlines;
     }
