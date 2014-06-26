@@ -9,7 +9,6 @@ import com.nearsoft.incubator.util.FlightApiConfiguration;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,13 +27,11 @@ public class FlightServiceImpl implements FlightService {
     private FlightApiConfiguration configuration;
 
     @Override
-    @Cacheable("airports")
     public List<Airport> getAllAirports() {
         Map<String, String> parameters = getCommonApiParameters();
         return restTemplate.getForObject(configuration.getAirportsUrl(), AirportsResponse.class, parameters).getAirports();
     }
 
-    @Cacheable("airlines")
     @Override
     public Map<String, Airline> getAirlinesMap() {
         Map<String, String> parameters = getCommonApiParameters();

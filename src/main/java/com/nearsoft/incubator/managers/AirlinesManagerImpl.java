@@ -1,4 +1,4 @@
-package com.nearsoft.incubator.repositories;
+package com.nearsoft.incubator.managers;
 
 import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.dao.AirlinesDao;
@@ -8,25 +8,27 @@ import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 /**
  * Created by edgar on 24/06/14.
  */
-@Component("airlinesRepositoryImpl")
-public class AirlinesRepositoryImpl implements AirlinesRepository {
+@Component("airlinesManagerImpl")
+public class AirlinesManagerImpl implements AirlinesManager {
 
     @Autowired
     @Qualifier("flightServiceImpl")
     private FlightService service;
     @Autowired
-    @Qualifier("jdbcAirlinesDao")
+    @Qualifier("hibernateAirlinesDao")
     private AirlinesDao airlinesDao;
     //Time (in seconds) allowed to use results from the database before updating it with data from the service
     private long cacheExpiry;
 
     @Override
+    @Transactional
     public Map<String, Airline> getAirlinesMap() {
         Map<String, Airline> airlines = airlinesDao.getAirlinesMap();
         if(airlines.isEmpty() || isDataTooOld(airlines)){

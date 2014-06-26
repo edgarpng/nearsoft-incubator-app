@@ -3,7 +3,7 @@ package com.nearsoft.incubator.controllers;
 import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
-import com.nearsoft.incubator.repositories.AirlinesRepository;
+import com.nearsoft.incubator.managers.AirlinesManager;
 import com.nearsoft.incubator.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,8 +28,8 @@ public class SchedulesController extends BaseController {
     @Qualifier("flightServiceImpl")
     private FlightService service;
     @Autowired
-    @Qualifier("airlinesRepositoryImpl")
-    private AirlinesRepository airlinesRepository;
+    @Qualifier("airlinesManagerImpl")
+    private AirlinesManager airlinesManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirport,
@@ -38,9 +38,9 @@ public class SchedulesController extends BaseController {
                                                                @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date arrivalDate){
         Schedule schedule = service.getScheduleByRoute(departureAirport, arrivalAirport, departureDate, arrivalDate);
         //Add the corresponding Airline object for every flight
-        Map<String, Airline> airlinesMap = airlinesRepository.getAirlinesMap();
-        setAirlineOnFlights(schedule.getDepartureFlights(), airlinesMap);
-        setAirlineOnFlights(schedule.getArrivalFlights(), airlinesMap);
+        Map<String, Airline> airlines = airlinesManager.getAirlinesMap();
+        setAirlineOnFlights(schedule.getDepartureFlights(), airlines);
+        setAirlineOnFlights(schedule.getArrivalFlights(), airlines);
         return schedule;
     }
 

@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ public class AirlinesDaoJdbcImpl extends JdbcDaoSupport implements AirlinesDao {
                 Airline airline = airlineList.get(i);
                 preparedStatement.setString(1, airline.getFs());
                 preparedStatement.setString(2, airline.getName());
-                preparedStatement.setTimestamp(3, new Timestamp(new Date().getTime()));
+                preparedStatement.setTimestamp(3, new Timestamp(airline.getCreationDate().getTime()));
             }
 
             @Override

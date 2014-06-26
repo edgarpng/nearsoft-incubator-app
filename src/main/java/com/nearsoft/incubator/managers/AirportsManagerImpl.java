@@ -1,4 +1,4 @@
-package com.nearsoft.incubator.repositories;
+package com.nearsoft.incubator.managers;
 
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.dao.AirportsDao;
@@ -8,29 +8,31 @@ import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Created by edgar on 24/06/14.
  */
-@Component("airportsRepositoryImpl")
-public class AirportsRepositoryImpl implements AirportsRepository {
+@Component("airportsManagerImpl")
+public class AirportsManagerImpl implements AirportsManager {
 
     @Autowired
     @Qualifier("flightServiceImpl")
-    private FlightService service;
+    private FlightService clientApi;
     @Autowired
-    @Qualifier("jdbcAirportsDao")
+    @Qualifier("hibernateAirportsDao")
     private AirportsDao airportsDao;
     //Time (in seconds) allowed to use results from the database before updating it with data from the service
     private long cacheExpiry;
 
     @Override
+    @Transactional
     public List<Airport> getAllAirports() {
         List<Airport> airports = airportsDao.getAllAirports();
         if(airports.isEmpty() || isDataTooOld(airports)){
-            airports = service.getAllAirports();
+            airports = clientApi.getAllAirports();
             airportsDao.deleteAll();
             airportsDao.save(airports);
         }
@@ -43,8 +45,7 @@ public class AirportsRepositoryImpl implements AirportsRepository {
 
     private boolean isDataTooOld(List<Airport> airports){
         Airport firstAirport = airports.get(1);
-        final DateTime NOW = DateTime.now();
         DateTime airportsCreation = new DateTime(firstAirport.getCreationDate());
-        return Seconds.secondsBetween(airportsCreation, NOW).getSeconds() > cacheExpiry;
+        return Seconds.secondsBetween(airportsCreation, DateTime.now()).getSeconds() > cacheExpiry;
     }
 }

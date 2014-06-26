@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -35,7 +34,7 @@ public class AirportsDaoJdbcImpl extends JdbcDaoSupport implements AirportsDao {
                 preparedStatement.setString(2, airport.getCity());
                 preparedStatement.setString(3, airport.getName());
                 preparedStatement.setString(4, airport.getCountryName());
-                preparedStatement.setTimestamp(5, new Timestamp(new Date().getTime()));
+                preparedStatement.setTimestamp(5, new Timestamp(airport.getCreationDate().getTime()));
             }
 
             @Override

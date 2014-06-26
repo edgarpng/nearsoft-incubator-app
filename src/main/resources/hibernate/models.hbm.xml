@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.nearsoft.incubator.bo.Airline" table="airline">
+        <id column="id" name="id" >
+            <generator class="increment"/>
+        </id>
+        <property name="fs" column="fs" type="string" length="100" />
+        <property name="name" column="name" type="string" length="100" />
+        <property name="creationDate" column="creationDate" type="timestamp" not-null="true" />
+    </class>
+
+    <class name="com.nearsoft.incubator.bo.Airport" table="airport">
+        <id column="id" name="id" >
+            <generator class="increment"/>
+        </id>
+        <property name="iata" column="iata" type="string" length="3" />
+        <property name="name" column="name" type="string" length="100"/>
+        <property name="city" column="city" type="string" length="100"/>
+        <property name="countryName" column="countryName" type="string" length="100"/>
+        <property name="creationDate" column="creationDate" type="timestamp" not-null="true"/>
+    </class>
+</hibernate-mapping>

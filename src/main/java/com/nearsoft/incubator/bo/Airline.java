@@ -10,10 +10,19 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Airline {
 
+    private long id;
     private String name;
     //Internal identifier for FlightStats
     private String fs;
-    private Date creationDate;
+    private Date creationDate = new Date();
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

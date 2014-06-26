@@ -4,6 +4,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -15,7 +16,9 @@
         http://www.springframework.org/schema/jee
         http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
         http://www.springframework.org/schema/cache
-        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="com.nearsoft.incubator" />
 
@@ -23,6 +26,8 @@
     <mvc:default-servlet-handler/>
 
     <cache:annotation-driven/>
+
+    <tx:annotation-driven />
 
     <!-- Configuration for view paths -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -72,18 +77,31 @@
     </bean>
 
     <!-- Cache expiry for airports (in seconds) -->
-    <bean id="airportsRepositoryImpl" class="com.nearsoft.incubator.repositories.AirportsRepositoryImpl">
-        <property name="cacheExpiry" value="28800" />
+    <bean id="airportsManagerImpl" class="com.nearsoft.incubator.managers.AirportsManagerImpl">
+        <property name="cacheExpiry" value="3600" />
     </bean>
 
     <!-- Cache expiry for airlines (in seconds) -->
-    <bean id="airlinesRepositoryImpl" class="com.nearsoft.incubator.repositories.AirlinesRepositoryImpl">
-        <property name="cacheExpiry" value="28800" />
+    <bean id="airlinesManagerImpl" class="com.nearsoft.incubator.managers.AirlinesManagerImpl">
+        <property name="cacheExpiry" value="3600" />
     </bean>
 
     <!-- Inject API configuration -->
-    <jee:jndi-lookup id="apiConfiguration" expected-type="com.nearsoft.incubator.util.FlightApiConfiguration" jndi-name="bean/configuration"/>
+    <jee:jndi-lookup id="apiConfiguration" expected-type="com.nearsoft.incubator.util.FlightApiConfiguration"
+                     jndi-name="bean/configuration"/>
 
     <!-- Database parameters -->
     <jee:jndi-lookup id="dataSource" expected-type="javax.sql.DataSource" jndi-name="jdbc/flightfinder" />
+
+    <!-- Hibernate Session Factory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate/hibernate.cfg.xml" />
+    </bean>
+
+    <!-- Transaction manager for Hibernate -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+          p:sessionFactory-ref="sessionFactory">
+    </bean>
 </beans>
