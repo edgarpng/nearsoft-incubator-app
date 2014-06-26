@@ -32,11 +32,11 @@ public class SchedulesController extends BaseController {
     private AirlinesManager airlinesManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirport,
-                                                               @RequestParam("arrivalAirport") String arrivalAirport,
+    public @ResponseBody Schedule getFlights(@RequestParam("departureAirport") String departureAirportIataCode,
+                                                               @RequestParam("arrivalAirport") String arrivalAirportIataCode,
                                                                @RequestParam("departureDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date departureDate,
                                                                @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date arrivalDate){
-        Schedule schedule = service.getScheduleByRoute(departureAirport, arrivalAirport, departureDate, arrivalDate);
+        Schedule schedule = service.getScheduleByRoute(departureAirportIataCode, arrivalAirportIataCode, departureDate, arrivalDate);
         //Add the corresponding Airline object for every flight
         Map<String, Airline> airlines = airlinesManager.getAirlinesMap();
         setAirlineOnFlights(schedule.getDepartureFlights(), airlines);

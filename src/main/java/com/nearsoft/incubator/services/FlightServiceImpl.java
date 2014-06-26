@@ -40,29 +40,29 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Schedule getScheduleByRoute(String departureAirport, String arrivalAirport, Date departure, Date arrival) {
-        List<Flight> departureFlights = getDepartureFlights(departureAirport, arrivalAirport, departure);
-        List<Flight> arrivalFlights = getArrivalFlights(arrivalAirport, departureAirport, arrival);
+    public Schedule getScheduleByRoute(String departureAirportIataCode, String arrivalAirportIataCode, Date departure, Date arrival) {
+        List<Flight> departureFlights = getDepartureFlights(departureAirportIataCode, arrivalAirportIataCode, departure);
+        List<Flight> arrivalFlights = getArrivalFlights(arrivalAirportIataCode, departureAirportIataCode, arrival);
         Schedule schedule = new Schedule();
         schedule.setDepartureFlights(departureFlights);
         schedule.setArrivalFlights(arrivalFlights);
         return schedule;
     }
 
-    private List<Flight> getDepartureFlights(String fromAirport, String toAirport, Date departure){
+    private List<Flight> getDepartureFlights(String fromAirportIataCode, String toAirportIataCode, Date departure){
         String departuresEndpoint = configuration.getDepartingFlightsUrl();
-        return callScheduleApi(departuresEndpoint, fromAirport, toAirport, departure);
+        return callScheduleApi(departuresEndpoint, fromAirportIataCode, toAirportIataCode, departure);
     }
 
-    private List<Flight> getArrivalFlights(String fromAirport, String toAirport, Date arrival){
+    private List<Flight> getArrivalFlights(String fromAirportIataCode, String toAirportIataCode, Date arrival){
         String arrivalsEndpoint = configuration.getArrivingFlightsUrl();
-        return callScheduleApi(arrivalsEndpoint, fromAirport, toAirport, arrival);
+        return callScheduleApi(arrivalsEndpoint, fromAirportIataCode, toAirportIataCode, arrival);
     }
 
-    private List<Flight> callScheduleApi(String url, String fromAirport, String toAirport, Date date){
+    private List<Flight> callScheduleApi(String url, String fromAirportIataCode, String toAirportIataCode, Date date){
         Map<String, String> parameters = getCommonApiParameters();
-        parameters.put("departureAirport", fromAirport);
-        parameters.put("arrivalAirport", toAirport);
+        parameters.put("departureAirport", fromAirportIataCode);
+        parameters.put("arrivalAirport", toAirportIataCode);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         parameters.put("year", calendar.get(Calendar.YEAR) + "");

@@ -13,7 +13,7 @@ public class Airlines {
     public static Map<String, Airline> toAirlinesMap(Collection<Airline> airlines){
         Map<String, Airline> map = new HashMap<>(airlines.size());
         for(Airline airline : airlines){
-            map.put(airline.getFs(), airline);
+            map.put(airline.getFlightStatsId(), airline);
         }
         return map;
     }

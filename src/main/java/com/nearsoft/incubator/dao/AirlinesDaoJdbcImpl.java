@@ -29,13 +29,13 @@ public class AirlinesDaoJdbcImpl extends JdbcDaoSupport implements AirlinesDao {
 
     @Override
     public void save(final Map<String, Airline> airlines) {
-        String sql = "insert into airline (fs, name, creationDate) values (?, ?, ?)";
+        String sql = "insert into airline (flightStatsId, name, creationDate) values (?, ?, ?)";
         final List<Airline> airlineList = new ArrayList<Airline>(airlines.values());
         getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                 Airline airline = airlineList.get(i);
-                preparedStatement.setString(1, airline.getFs());
+                preparedStatement.setString(1, airline.getFlightStatsId());
                 preparedStatement.setString(2, airline.getName());
                 preparedStatement.setTimestamp(3, new Timestamp(airline.getCreationDate().getTime()));
             }

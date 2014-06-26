@@ -1,6 +1,7 @@
 package com.nearsoft.incubator.bo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
 
@@ -11,9 +12,9 @@ import java.util.Date;
 public class Airline {
 
     private long id;
+    @JsonProperty("fs")
+    private String flightStatsId;
     private String name;
-    //Internal identifier for FlightStats
-    private String fs;
     private Date creationDate = new Date();
 
     public long getId() {
@@ -32,12 +33,12 @@ public class Airline {
         this.name = name;
     }
 
-    public String getFs() {
-        return fs;
+    public String getFlightStatsId() {
+        return flightStatsId;
     }
 
-    public void setFs(String fs) {
-        this.fs = fs;
+    public void setFlightStatsId(String flightStatsId) {
+        this.flightStatsId = flightStatsId;
     }
 
     public Date getCreationDate() {
