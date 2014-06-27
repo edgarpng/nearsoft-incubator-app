@@ -3,19 +3,16 @@ package com.nearsoft.incubator.bo;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.Date;
-
 /**
  * Created by edgar on 18/06/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Airline {
+public class Airline extends PersistableEntity   {
 
     private long id;
     @JsonProperty("fs")
     private String flightStatsId;
     private String name;
-    private Date creationDate = new Date();
 
     public long getId() {
         return id;
@@ -39,13 +36,5 @@ public class Airline {
 
     public void setFlightStatsId(String flightStatsId) {
         this.flightStatsId = flightStatsId;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 }

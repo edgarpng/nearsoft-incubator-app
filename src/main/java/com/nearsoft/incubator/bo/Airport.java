@@ -2,20 +2,17 @@ package com.nearsoft.incubator.bo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import java.util.Date;
-
 /**
  * Created by edgar on 5/06/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Airport {
+public class Airport extends PersistableEntity {
 
     private long id;
     private String iata;
     private String name;
     private String city;
     private String countryName;
-    private Date creationDate = new Date();
 
     public long getId() {
         return id;
@@ -55,13 +52,5 @@ public class Airport {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 }
