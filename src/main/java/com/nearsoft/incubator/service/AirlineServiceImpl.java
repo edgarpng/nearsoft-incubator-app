@@ -1,8 +1,9 @@
 package com.nearsoft.incubator.service;
 
 import com.nearsoft.incubator.bo.Airline;
-import com.nearsoft.incubator.dao.AirlineDao;
+import com.nearsoft.incubator.dao.Dao;
 import com.nearsoft.incubator.rest.client.FlightStatsClient;
+import com.nearsoft.incubator.util.Airlines;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,30 +25,29 @@ public class AirlineServiceImpl implements AirlineService {
     private FlightStatsClient apiClient;
     @Autowired
     @Qualifier("airlineDaoHibernateImpl")
-    private AirlineDao airlineDao;
+    private Dao<Airline> airlineDao;
     //Time (in seconds) allowed to use results from the database before updating it with data from the apiClient
     private long cacheExpiry;
 
     @Override
     @Transactional
     public Map<String, Airline> getAirlinesMap() {
-        Map<String, Airline> airlines = airlineDao.getAirlinesMap();
+        List<Airline> airlines = airlineDao.findAll();
         if(airlines.isEmpty() || isDataTooOld(airlines)){
-            airlines = apiClient.getAirlinesMap();
+            airlines = apiClient.getAllAirlines();
             airlineDao.deleteAll();
-            airlineDao.save(airlines);
+            airlineDao.saveAll(airlines);
         }
-        return airlines;
+        return Airlines.toAirlinesMap(airlines);
     }
 
     public void setCacheExpiry(long cacheExpiry) {
         this.cacheExpiry = cacheExpiry;
     }
 
-    private boolean isDataTooOld(Map<String, Airline> airlines){
-        Airline firstAirline = airlines.values().iterator().next();
-        final DateTime NOW = DateTime.now();
+    private boolean isDataTooOld(List<Airline> airlines){
+        Airline firstAirline = airlines.get(1);
         DateTime airlinesCreation = new DateTime(firstAirline.getCreationDate());
-        return Seconds.secondsBetween(airlinesCreation, NOW).getSeconds() > cacheExpiry;
+        return Seconds.secondsBetween(airlinesCreation, DateTime.now()).getSeconds() > cacheExpiry;
     }
 }

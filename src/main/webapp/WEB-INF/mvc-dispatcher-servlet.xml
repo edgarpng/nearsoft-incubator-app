@@ -8,13 +8,13 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
         http://www.springframework.org/schema/jee
-        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
         http://www.springframework.org/schema/cache
         http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
         http://www.springframework.org/schema/tx
@@ -70,10 +70,16 @@
     <bean id="airportDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirportDaoJdbcImpl">
         <property name="dataSource" ref="dataSource" />
     </bean>
+    <bean id="airportDaoHibernateImpl" class="com.nearsoft.incubator.dao.AirportDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
     <!-- Airline Dao -->
     <bean id="airlineDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirlineDaoJdbcImpl">
         <property name="dataSource" ref="dataSource" />
+    </bean>
+    <bean id="airlineDaoHibernateImpl" class="com.nearsoft.incubator.dao.AirlineDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     <!-- Cache expiry for airports (in seconds) -->

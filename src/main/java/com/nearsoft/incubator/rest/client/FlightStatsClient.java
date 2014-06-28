@@ -6,7 +6,6 @@ import com.nearsoft.incubator.bo.Schedule;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by edgar on 5/06/14.
@@ -14,6 +13,6 @@ import java.util.Map;
 public interface FlightStatsClient {
 
     public List<Airport> getAllAirports();
-    public Map<String, Airline> getAirlinesMap();
+    public List<Airline> getAllAirlines();
     public Schedule getScheduleByRoute(String departureAirport, String arrivalAirport, Date departure, Date arrival);
 }

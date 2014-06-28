@@ -1,7 +1,7 @@
 package com.nearsoft.incubator.service;
 
 import com.nearsoft.incubator.bo.Airport;
-import com.nearsoft.incubator.dao.AirportDao;
+import com.nearsoft.incubator.dao.Dao;
 import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
@@ -23,18 +23,18 @@ public class AirportServiceImpl implements AirportService {
     private FlightStatsClient apiClient;
     @Autowired
     @Qualifier("airportDaoHibernateImpl")
-    private AirportDao airportDao;
+    private Dao<Airport> airportDao;
     //Time (in seconds) allowed to use results from the database before updating it with data from the service
     private long cacheExpiry;
 
     @Override
     @Transactional
     public List<Airport> getAllAirports() {
-        List<Airport> airports = airportDao.getAllAirports();
+        List<Airport> airports = airportDao.findAll();
         if(airports.isEmpty() || isDataTooOld(airports)){
             airports = apiClient.getAllAirports();
             airportDao.deleteAll();
-            airportDao.save(airports);
+            airportDao.saveAll(airports);
         }
         return airports;
     }

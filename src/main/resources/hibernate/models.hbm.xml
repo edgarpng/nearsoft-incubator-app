@@ -4,8 +4,8 @@
 
 <hibernate-mapping>
     <class name="com.nearsoft.incubator.bo.Airline" table="airline">
-        <id column="id" name="id" >
-            <generator class="increment"/>
+        <id column="id" name="id" type="long">
+            <generator class="identity"/>
         </id>
         <property name="flightStatsId" column="flightStatsId" type="string" length="100" />
         <property name="name" column="name" type="string" length="100" />
@@ -13,8 +13,8 @@
     </class>
 
     <class name="com.nearsoft.incubator.bo.Airport" table="airport">
-        <id column="id" name="id" >
-            <generator class="increment"/>
+        <id column="id" name="id" type="long">
+            <generator class="identity"/>
         </id>
         <property name="iata" column="iata" type="string" length="3" />
         <property name="name" column="name" type="string" length="100"/>

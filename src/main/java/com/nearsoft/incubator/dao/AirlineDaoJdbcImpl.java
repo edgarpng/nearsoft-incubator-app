@@ -1,55 +1,40 @@
 package com.nearsoft.incubator.dao;
 
 import com.nearsoft.incubator.bo.Airline;
-import com.nearsoft.incubator.util.Airlines;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by edgar on 20/06/14.
  */
 @Component("airlineDaoJdbcImpl")
-public class AirlineDaoJdbcImpl extends JdbcDaoSupport implements AirlineDao {
+public class AirlineDaoJdbcImpl extends JdbcDao<Airline> {
 
-    @Override
-    public Map<String, Airline> getAirlinesMap() {
-        String sql = "select * from airline";
-        List<Airline> airlines =  getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Airline.class));
-        return Airlines.toAirlinesMap(airlines);
+    private static final String TABLE_NAME = "airline";
+
+    public AirlineDaoJdbcImpl(){
+        super(Airline.class);
     }
 
     @Override
-    public void save(final Map<String, Airline> airlines) {
-        String sql = "insert into airline (flightStatsId, name, creationDate) values (?, ?, ?)";
-        final List<Airline> airlineList = new ArrayList<Airline>(airlines.values());
-        getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                Airline airline = airlineList.get(i);
-                preparedStatement.setString(1, airline.getFlightStatsId());
-                preparedStatement.setString(2, airline.getName());
-                preparedStatement.setTimestamp(3, new Timestamp(airline.getCreationDate().getTime()));
-            }
-
-            @Override
-            public int getBatchSize() {
-                return airlines.size();
-            }
-        });
+    protected String getTableName() {
+        return TABLE_NAME;
     }
 
     @Override
-    public void deleteAll() {
-        String sql = "delete from airline";
-        getJdbcTemplate().update(sql);
+    protected List<String> getColumnNames() {
+        return Arrays.asList("flightStatsId", "name", "creationDate");
+    }
+
+    @Override
+    protected void setValues(PreparedStatement preparedStatement, Airline airline) throws SQLException{
+        preparedStatement.setString(1, airline.getFlightStatsId());
+        preparedStatement.setString(2, airline.getName());
+        preparedStatement.setTimestamp(3, new Timestamp(airline.getCreationDate().getTime()));
     }
 }

@@ -1,52 +1,42 @@
 package com.nearsoft.incubator.dao;
 
 import com.nearsoft.incubator.bo.Airport;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by edgar on 16/06/14.
  */
 @Component("airportDaoJdbcImpl")
-public class AirportDaoJdbcImpl extends JdbcDaoSupport implements AirportDao {
+public class AirportDaoJdbcImpl extends JdbcDao<Airport> {
 
-    @Override
-    public List<Airport> getAllAirports() {
-        String sql = "select * from airport";
-        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Airport.class));
+    private static final String TABLE_NAME = "airport";
+
+    public AirportDaoJdbcImpl(){
+        super(Airport.class);
     }
 
     @Override
-    public void save(final List<Airport> airports) {
-        String sql = "insert into airport (iata, city, name, countryName, creationDate) values (?, ?, ?, ?, ?)";
-        getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                Airport airport = airports.get(i);
-                preparedStatement.setString(1, airport.getIata());
-                preparedStatement.setString(2, airport.getCity());
-                preparedStatement.setString(3, airport.getName());
-                preparedStatement.setString(4, airport.getCountryName());
-                preparedStatement.setTimestamp(5, new Timestamp(airport.getCreationDate().getTime()));
-            }
-
-            @Override
-            public int getBatchSize() {
-                return airports.size();
-            }
-        });
+    protected String getTableName() {
+        return TABLE_NAME;
     }
 
     @Override
-    public void deleteAll() {
-        String sql = "delete from airport";
-        getJdbcTemplate().update(sql);
+    protected List<String> getColumnNames() {
+        return Arrays.asList("iata", "name", "city", "countryName", "creationDate");
+    }
+
+    @Override
+    protected void setValues(PreparedStatement preparedStatement, Airport airport) throws SQLException{
+        preparedStatement.setString(1, airport.getIata());
+        preparedStatement.setString(2, airport.getName());
+        preparedStatement.setString(3, airport.getCity());
+        preparedStatement.setString(4, airport.getCountryName());
+        preparedStatement.setTimestamp(5, new Timestamp(airport.getCreationDate().getTime()));
     }
 }

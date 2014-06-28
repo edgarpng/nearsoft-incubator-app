@@ -4,7 +4,6 @@ import com.nearsoft.incubator.bo.Airline;
 import com.nearsoft.incubator.bo.Airport;
 import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
-import com.nearsoft.incubator.util.Airlines;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,10 +31,9 @@ public class FlightStatsClientImpl implements FlightStatsClient {
     }
 
     @Override
-    public Map<String, Airline> getAirlinesMap() {
+    public List<Airline> getAllAirlines() {
         Map<String, String> parameters = getCommonApiParameters();
-        List<Airline> airlines = restTemplate.getForObject(configuration.getAirlinesUrl(), AirlinesResponse.class, parameters).getAirlines();
-        return Airlines.toAirlinesMap(airlines);
+        return restTemplate.getForObject(configuration.getAirlinesUrl(), AirlinesResponse.class, parameters).getAirlines();
     }
 
     @Override
