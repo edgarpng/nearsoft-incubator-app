@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
+
+    <!-- Inject API configuration -->
+    <jee:jndi-lookup id="flightStatsClientConfiguration"
+                     expected-type="com.nearsoft.incubator.rest.client.FlightStatsClientConfiguration"
+                     jndi-name="bean/configuration"/>
+</beans>

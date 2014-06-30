@@ -1,114 +1,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:jee="http://www.springframework.org/schema/jee"
-       xmlns:cache="http://www.springframework.org/schema/cache"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.2.xsd
-        http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-        http://www.springframework.org/schema/jee
-        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
-        http://www.springframework.org/schema/cache
-        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
-        http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <context:component-scan base-package="com.nearsoft.incubator" />
-
-    <mvc:annotation-driven />
-    <mvc:default-servlet-handler/>
-
-    <cache:annotation-driven/>
-
-    <tx:annotation-driven />
-
-    <!-- Configuration for view paths -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/pages/</value>
-        </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-    </bean>
-
-    <!-- Rest Template -->
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
-
-    <!-- Register JSON Converter for RESTful Web Service -->
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-            </list>
-        </property>
-    </bean>
-
-    <!-- HTTP JSON MessageConverter -->
-    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-        <property name="supportedMediaTypes" value="application/json" />
-    </bean>
-
-    <!-- Spring Cache w/ default JDK implementation -->
-    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-        <property name="caches">
-            <set>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="airports" />
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="airlines" />
-            </set>
-        </property>
-    </bean>
-
-    <!-- Airport Dao -->
-    <bean id="airportDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirportDaoJdbcImpl">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-    <bean id="airportDaoHibernateImpl" class="com.nearsoft.incubator.dao.AirportDaoHibernateImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <!-- Airline Dao -->
-    <bean id="airlineDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirlineDaoJdbcImpl">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-    <bean id="airlineDaoHibernateImpl" class="com.nearsoft.incubator.dao.AirlineDaoHibernateImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <!-- Cache expiry for airports (in seconds) -->
-    <bean id="airportServiceImpl" class="com.nearsoft.incubator.service.AirportServiceImpl">
-        <property name="cacheExpiry" value="3600" />
-    </bean>
-
-    <!-- Cache expiry for airlines (in seconds) -->
-    <bean id="airlineServiceImpl" class="com.nearsoft.incubator.service.AirlineServiceImpl">
-        <property name="cacheExpiry" value="3600" />
-    </bean>
-
-    <!-- Inject API configuration -->
-    <jee:jndi-lookup id="flightStatsClientConfiguration"
-                     expected-type="com.nearsoft.incubator.rest.client.FlightStatsClientConfiguration"
-                     jndi-name="bean/configuration"/>
-
-    <!-- Database parameters -->
-    <jee:jndi-lookup id="dataSource" expected-type="javax.sql.DataSource" jndi-name="jdbc/flightfinder" />
-
-    <!-- Hibernate Session Factory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:hibernate/hibernate.cfg.xml" />
-    </bean>
-
-    <!-- Transaction manager for Hibernate -->
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate3.HibernateTransactionManager"
-          p:sessionFactory-ref="sessionFactory">
-    </bean>
+    <import resource="spring-cache.xml" />
+    <import resource="spring-config.xml" />
+    <import resource="spring-dao.xml" />
+    <import resource="spring-database.xml" />
+    <import resource="spring-mvc.xml" />
+    <import resource="spring-transaction.xml" />
 </beans>
