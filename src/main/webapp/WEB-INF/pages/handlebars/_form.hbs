@@ -1,0 +1,5 @@
+{{input type="hidden" class="airport-picker" placeholder="From city" value=departureAirport}}
+{{input type="hidden" class="airport-picker" placeholder="To city" value=arrivalAirport}}
+{{input type="text" class="date-picker form-control" name="departureDate" placeholder="Departure date" value=departureDate}}
+{{input type="text" class="date-picker form-control" name="arrivalDate" placeholder="Arrival date" value=arrivalDate}}
+<input type="submit" value="Find!" class="btn btn-primary" {{action 'search'}}>

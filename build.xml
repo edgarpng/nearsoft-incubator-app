@@ -1,0 +1,12 @@
+<project basedir=".">
+
+   <property name="webapp.dir" value="src/main/webapp" />
+
+   <target name="build-ember-templates">
+       <apply executable="ember-precompile" parallel="true">
+           <fileset dir="${webapp.dir}/WEB-INF/pages/handlebars" includes="*.hbs"/>
+           <arg value="-f" />
+           <arg value="${webapp.dir}/js/handlebars-templates.js" />
+       </apply>
+   </target>
+</project>

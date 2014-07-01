@@ -7,5 +7,8 @@
 log/
 target/
 
-#Tomcat config
+# Handlebars builds
+handlebars-templates.js
+
+# Tomcat config
 src/main/tomcatconf/

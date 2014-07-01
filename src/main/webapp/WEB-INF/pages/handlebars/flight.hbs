@@ -1,0 +1,18 @@
+<tr>
+  <td>{{flight.id}}</td>
+  <td>{{flight.airline.name}}</td>
+  <td>{{formatTime flight.departureTime}}</td>
+  <td>
+    {{formatTime flight.arrivalTime}}
+    {{#if flight.arrivalTerminal}}
+       at Terminal {{flight.arrivalTerminal}}
+    {{/if}}
+  </td>
+  <td>
+    {{#if flight.stops}}
+      {{flight.stops}}
+    {{else}}
+      Nonstop
+    {{/if}}
+  </td>
+</tr>
