@@ -19,7 +19,6 @@ import java.util.List;
 public class AirportServiceImpl implements AirportService {
 
     @Autowired
-    @Qualifier("flightStatsClientImpl")
     private FlightStatsClient apiClient;
     @Autowired
     @Qualifier("airportDaoHibernateImpl")

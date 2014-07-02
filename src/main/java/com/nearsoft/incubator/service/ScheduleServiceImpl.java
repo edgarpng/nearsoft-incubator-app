@@ -5,7 +5,6 @@ import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
 import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,10 +18,8 @@ import java.util.Map;
 public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
-    @Qualifier("flightStatsClientImpl")
     private FlightStatsClient apiClient;
     @Autowired
-    @Qualifier("airlineServiceImpl")
     private AirlineService airlineService;
 
     @Override

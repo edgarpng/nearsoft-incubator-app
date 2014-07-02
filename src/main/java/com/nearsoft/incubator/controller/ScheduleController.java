@@ -3,7 +3,6 @@ package com.nearsoft.incubator.controller;
 import com.nearsoft.incubator.bo.Schedule;
 import com.nearsoft.incubator.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,6 @@ import java.util.Date;
 public class ScheduleController extends BaseController {
 
     @Autowired
-    @Qualifier("scheduleServiceImpl")
     private ScheduleService scheduleService;
 
     @RequestMapping(method = RequestMethod.GET)

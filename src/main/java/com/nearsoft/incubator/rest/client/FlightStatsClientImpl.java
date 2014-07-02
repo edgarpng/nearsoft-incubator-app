@@ -6,7 +6,6 @@ import com.nearsoft.incubator.bo.Flight;
 import com.nearsoft.incubator.bo.Schedule;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,7 +20,6 @@ public class FlightStatsClientImpl implements FlightStatsClient {
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    @Qualifier("flightStatsClientConfiguration")
     private FlightStatsClientConfiguration configuration;
 
     @Override

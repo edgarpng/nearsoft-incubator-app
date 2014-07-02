@@ -21,7 +21,6 @@ import java.util.Map;
 public class AirlineServiceImpl implements AirlineService {
 
     @Autowired
-    @Qualifier("flightStatsClientImpl")
     private FlightStatsClient apiClient;
     @Autowired
     @Qualifier("airlineDaoHibernateImpl")
