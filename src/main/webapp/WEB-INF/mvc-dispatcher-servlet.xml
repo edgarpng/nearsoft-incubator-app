@@ -4,9 +4,12 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <import resource="spring-beans.xml" />
-    <import resource="spring-cache.xml" />
-    <import resource="spring-mvc.xml" />
-    <import resource="spring-persistence.xml" />
-    <import resource="spring-transaction.xml" />
+    <import resource="classpath:spring/cache-beans.xml" />
+    <import resource="classpath:spring/controller-beans.xml" />
+    <import resource="classpath:spring/dao-beans.xml" />
+    <import resource="classpath:spring/mvc-beans.xml" />
+    <import resource="classpath:spring/persistence-beans.xml" />
+    <import resource="classpath:spring/rest-client-beans.xml" />
+    <import resource="classpath:spring/service-beans.xml" />
+    <import resource="classpath:spring/transaction-beans.xml" />
 </beans>

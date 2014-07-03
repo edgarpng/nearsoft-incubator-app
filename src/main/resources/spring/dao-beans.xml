@@ -1,16 +1,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-        http://www.springframework.org/schema/jee
-        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-    <context:component-scan base-package="com.nearsoft.incubator" />
+    <context:component-scan base-package="com.nearsoft.incubator.dao" />
 
     <!-- Airport Dao -->
     <bean id="airportDaoJdbcImpl" class="com.nearsoft.incubator.dao.AirportDaoJdbcImpl">
@@ -27,19 +24,4 @@
     <bean id="airlineDaoHibernateImpl" class="com.nearsoft.incubator.dao.AirlineDaoHibernateImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-
-    <!-- Cache expiry for airports (in seconds) -->
-    <bean id="airportServiceImpl" class="com.nearsoft.incubator.service.AirportServiceImpl">
-        <property name="cacheExpiry" value="3600" />
-    </bean>
-
-    <!-- Cache expiry for airlines (in seconds) -->
-    <bean id="airlineServiceImpl" class="com.nearsoft.incubator.service.AirlineServiceImpl">
-        <property name="cacheExpiry" value="3600" />
-    </bean>
-
-    <!-- API configuration -->
-    <jee:jndi-lookup id="flightStatsClientConfiguration"
-                     expected-type="com.nearsoft.incubator.rest.client.FlightStatsClientConfiguration"
-                     jndi-name="bean/configuration"/>
 </beans>
