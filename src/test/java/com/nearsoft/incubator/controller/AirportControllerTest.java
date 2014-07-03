@@ -30,8 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {
-        "file:src/main/webapp/WEB-INF/spring-mvc.xml",
-        "file:src/main/webapp/WEB-INF/spring-beans-test.xml"
+        "classpath:spring/mvc-beans.xml",
+        "classpath:spring/controller-beans-test.xml"
 })
 public class AirportControllerTest {
 
