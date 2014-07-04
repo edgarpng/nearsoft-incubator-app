@@ -40,6 +40,11 @@ public class ScheduleControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockMvc;
+    private static final String DEPARTURE_AIRPORT = "SFO";
+    private static final String ARRIVAL_AIRPORT = "LAX";
+    private static final String DEPARTURE_DATE = "2014-10-10";
+    private static final String ARRIVAL_DATE = "2014-10-11";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @Before
     public void setUp(){
@@ -49,21 +54,17 @@ public class ScheduleControllerTest {
     @Test
     public void testGetSchedule() throws Exception {
         Schedule schedule = new Schedule();
-        String departureAirport = "SFO";
-        String arrivalAirport = "LAX";
-        String departureDateString = "2014-10-10";
-        String arrivalDateString = "2014-10-11";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date departureDate = format.parse(departureDateString);
-        Date arrivalDate = format.parse(arrivalDateString);
-        expect(service.getScheduleByRoute(eq(departureAirport), eq(arrivalAirport), eq(departureDate), eq(arrivalDate)))
-                .andReturn(schedule).once();
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        Date departureDate = format.parse(DEPARTURE_DATE);
+        Date arrivalDate = format.parse(ARRIVAL_DATE);
+        expect(service.getScheduleByRoute(eq(DEPARTURE_AIRPORT), eq(ARRIVAL_AIRPORT),
+                eq(departureDate), eq(arrivalDate))).andReturn(schedule).once();
         replay(service);
         mockMvc.perform(get("/schedules")
-                    .param("departureAirport", departureAirport)
-                    .param("arrivalAirport", arrivalAirport)
-                    .param("departureDate", departureDateString)
-                    .param("arrivalDate", arrivalDateString)
+                    .param("departureAirport", DEPARTURE_AIRPORT)
+                    .param("arrivalAirport", ARRIVAL_AIRPORT)
+                    .param("departureDate", DEPARTURE_DATE)
+                    .param("arrivalDate", ARRIVAL_DATE)
                     .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(not(isEmptyString())));
