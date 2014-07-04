@@ -38,13 +38,21 @@ public class AirportServiceImpl implements AirportService {
         return airports;
     }
 
+    private boolean isDataTooOld(List<Airport> airports){
+        Airport firstAirport = airports.get(0);
+        DateTime airportsCreation = new DateTime(firstAirport.getCreationDate());
+        return Seconds.secondsBetween(airportsCreation, DateTime.now()).getSeconds() > cacheExpiry;
+    }
+
     public void setCacheExpiry(long cacheExpiry) {
         this.cacheExpiry = cacheExpiry;
     }
 
-    private boolean isDataTooOld(List<Airport> airports){
-        Airport firstAirport = airports.get(1);
-        DateTime airportsCreation = new DateTime(firstAirport.getCreationDate());
-        return Seconds.secondsBetween(airportsCreation, DateTime.now()).getSeconds() > cacheExpiry;
+    public void setAirportDao(Dao<Airport> airportDao) {
+        this.airportDao = airportDao;
+    }
+
+    public void setApiClient(FlightStatsClient apiClient) {
+        this.apiClient = apiClient;
     }
 }

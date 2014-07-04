@@ -40,13 +40,21 @@ public class AirlineServiceImpl implements AirlineService {
         return Airlines.toAirlinesMap(airlines);
     }
 
+    private boolean isDataTooOld(List<Airline> airlines){
+        Airline firstAirline = airlines.get(0);
+        DateTime airlinesCreation = new DateTime(firstAirline.getCreationDate());
+        return Seconds.secondsBetween(airlinesCreation, DateTime.now()).getSeconds() > cacheExpiry;
+    }
+
     public void setCacheExpiry(long cacheExpiry) {
         this.cacheExpiry = cacheExpiry;
     }
 
-    private boolean isDataTooOld(List<Airline> airlines){
-        Airline firstAirline = airlines.get(1);
-        DateTime airlinesCreation = new DateTime(firstAirline.getCreationDate());
-        return Seconds.secondsBetween(airlinesCreation, DateTime.now()).getSeconds() > cacheExpiry;
+    public void setAirlineDao(Dao<Airline> airlineDao){
+        this.airlineDao = airlineDao;
+    }
+
+    public void setApiClient(FlightStatsClient apiClient){
+        this.apiClient = apiClient;
     }
 }

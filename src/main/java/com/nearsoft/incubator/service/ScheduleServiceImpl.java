@@ -39,4 +39,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             flight.setAirline(airline);
         }
     }
+
+    public void setAirlineService(AirlineService airlineService) {
+        this.airlineService = airlineService;
+    }
+
+    public void setApiClient(FlightStatsClient apiClient) {
+        this.apiClient = apiClient;
+    }
 }
