@@ -1,6 +1,7 @@
 package com.nearsoft.incubator.bo;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by edgar on 5/06/14.
@@ -11,9 +12,12 @@ public class Flight {
     //Timestamps are kept as String to avoid unnecessary parsing
     private String departureTime;
     private String arrivalTime;
-    private String departureAirportFsCode;
-    private String arrivalAirportFsCode;
-    private String carrierFsCode;
+    @JsonProperty("departureAirportFsCode")
+    private String departureAirportIataCode;
+    @JsonProperty("arrivalAirportFsCode")
+    private String arrivalAirportIataCode;
+    @JsonProperty("carrierFsCode")
+    private String airlineFlightStatsId;
     private String arrivalTerminal;
     private String flightNumber;
     private Airline airline;
@@ -40,28 +44,28 @@ public class Flight {
         this.arrivalTime = arrivalTime;
     }
 
-    public String getDepartureAirportFsCode() {
-        return departureAirportFsCode;
+    public String getDepartureAirportIataCode() {
+        return departureAirportIataCode;
     }
 
-    public void setDepartureAirportFsCode(String departureAirportFsCode) {
-        this.departureAirportFsCode = departureAirportFsCode;
+    public void setDepartureAirportIataCode(String departureAirportIataCode) {
+        this.departureAirportIataCode = departureAirportIataCode;
     }
 
-    public String getArrivalAirportFsCode() {
-        return arrivalAirportFsCode;
+    public String getArrivalAirportIataCode() {
+        return arrivalAirportIataCode;
     }
 
-    public void setArrivalAirportFsCode(String arrivalAirportFsCode) {
-        this.arrivalAirportFsCode = arrivalAirportFsCode;
+    public void setArrivalAirportIataCode(String arrivalAirportIataCode) {
+        this.arrivalAirportIataCode = arrivalAirportIataCode;
     }
 
-    public String getCarrierFsCode() {
-        return carrierFsCode;
+    public String getAirlineFlightStatsId() {
+        return airlineFlightStatsId;
     }
 
-    public void setCarrierFsCode(String carrierFsCode) {
-        this.carrierFsCode = carrierFsCode;
+    public void setAirlineFlightStatsId(String airlineFlightStatsId) {
+        this.airlineFlightStatsId = airlineFlightStatsId;
     }
 
     public String getArrivalTerminal() {

@@ -35,7 +35,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private void setAirlineOnFlights(List<Flight> flights, Map<String, Airline> airlinesMap){
         for(Flight flight: flights){
-            Airline airline = airlinesMap.get(flight.getCarrierFsCode());
+            Airline airline = airlinesMap.get(flight.getAirlineFlightStatsId());
             flight.setAirline(airline);
         }
     }
