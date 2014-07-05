@@ -8,9 +8,11 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +29,12 @@ import static org.hamcrest.Matchers.hasItems;
 @ContextConfiguration(locations = {
         "classpath:spring/service-beans-test.xml"
 })
+@Component("airlineServiceTest")
 public class AirlineServiceTest {
 
     @Autowired
     private Dao<Airline> airlineDao;
-    @Autowired
+    @Resource(name="airlineServiceImpl")
     private AirlineService airlineService;
     @Autowired
     private FlightStatsClient apiClient;
@@ -105,5 +108,9 @@ public class AirlineServiceTest {
             airline.setCreationDate(now.minusSeconds(seconds).toDate());
         }
         return airlines;
+    }
+
+    public void setAirlineService(AirlineService airlineService) {
+        this.airlineService = airlineService;
     }
 }

@@ -6,7 +6,6 @@ import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +19,6 @@ public class AirportServiceImpl implements AirportService {
 
     @Autowired
     private FlightStatsClient apiClient;
-    @Autowired
-    @Qualifier("airportDaoHibernateImpl")
     private Dao<Airport> airportDao;
     //Time (in seconds) allowed to use results from the database before updating it with data from the service
     private long cacheExpiry;

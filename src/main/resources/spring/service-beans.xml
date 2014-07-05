@@ -12,10 +12,12 @@
     <!-- Cache expiry for airports (in seconds) -->
     <bean id="airportServiceImpl" class="com.nearsoft.incubator.service.AirportServiceImpl">
         <property name="cacheExpiry" value="3600" />
+        <property name="airportDao" ref="airportDaoHibernateImpl" />
     </bean>
 
     <!-- Cache expiry for airlines (in seconds) -->
     <bean id="airlineServiceImpl" class="com.nearsoft.incubator.service.AirlineServiceImpl">
         <property name="cacheExpiry" value="3600" />
+        <property name="airlineDao" ref="airlineDaoHibernateImpl" />
     </bean>
 </beans>

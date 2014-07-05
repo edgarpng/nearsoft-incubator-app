@@ -49,7 +49,9 @@ public class ScheduleServiceTest {
         Schedule theScheduleReturnedByTheApi = stubApiClientResult();
         expect(apiClient.getScheduleByRoute(eq(DEPARTURE_AIRPORT), eq(ARRIVAL_AIRPORT),
                 eq(DEPARTURE_DATE), eq(ARRIVAL_DATE))).andReturn(theScheduleReturnedByTheApi);
+        expect(airlineService.getAirlinesMap()).andReturn(stubAirlineMap());
         replay(apiClient);
+        replay(airlineService);
         Schedule theScheduleReturnedByTheService = scheduleService.getScheduleByRoute(DEPARTURE_AIRPORT, ARRIVAL_AIRPORT,
                 DEPARTURE_DATE, ARRIVAL_DATE);
         assertThat(theScheduleReturnedByTheService, is(theScheduleReturnedByTheApi));
