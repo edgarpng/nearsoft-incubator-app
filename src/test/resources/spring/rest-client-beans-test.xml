@@ -1,0 +1,17 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- API Configuration as nice mock because we are only interested in mocking a couple of methods -->
+    <bean id="configurationMock" class="org.easymock.EasyMock" factory-method="createNiceMock">
+        <constructor-arg value="com.nearsoft.incubator.rest.client.FlightStatsClientConfiguration" />
+    </bean>
+
+    <bean id="restTemplateMock" class="org.easymock.EasyMock" factory-method="createMock">
+        <constructor-arg value="org.springframework.web.client.RestTemplate" />
+    </bean>
+
+    <bean id="flightStatsClientImpl" class="com.nearsoft.incubator.rest.client.FlightStatsClientImpl" />
+</beans>
