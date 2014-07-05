@@ -68,6 +68,7 @@ public class AirlineServiceTest {
         Map<String, Airline> airlinesReturnedByTheService = airlineService.getAirlinesMap();
         assertThat(airlinesReturnedByTheService.size(), equalTo(airlinesReturnedByTheApi.size()));
         assertThat(airlinesReturnedByTheService.values(), hasItems(inThe(airlinesReturnedByTheApi)));
+        verify(airlineDao);
     }
 
     @Test
@@ -83,6 +84,7 @@ public class AirlineServiceTest {
         Map<String, Airline> airlinesReturnedByTheService = airlineService.getAirlinesMap();
         assertThat(airlinesReturnedByTheService.size(), equalTo(airlinesReturnedByTheApi.size()));
         assertThat(airlinesReturnedByTheService.values(), hasItems(inThe(airlinesReturnedByTheApi)));
+        verify(airlineDao);
     }
 
     private Airline[] inThe(List<Airline> list) {

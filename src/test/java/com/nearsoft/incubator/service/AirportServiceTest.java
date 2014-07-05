@@ -63,6 +63,7 @@ public class AirportServiceTest {
         replay(apiClient);
         List<Airport> airportsReturnedByTheService = airportService.getAllAirports();
         assertThat(airportsReturnedByTheService, is(airportsReturnedByTheApi));
+        verify(airportDao);
     }
 
     @Test
@@ -77,6 +78,7 @@ public class AirportServiceTest {
         replay(apiClient);
         List<Airport> airportsReturnedByTheService = airportService.getAllAirports();
         assertThat(airportsReturnedByTheService, is(airportsReturnedByTheApi));
+        verify(airportDao);
     }
 
     private List<Airport> stubEmptyAirportList(){
