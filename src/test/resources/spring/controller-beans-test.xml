@@ -19,5 +19,26 @@
         <constructor-arg value="com.nearsoft.incubator.service.ScheduleService" />
     </bean>
 
+    <!-- Test parameters -->
+    <bean id="departureAirportUrlParam" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="a"/>
+    </bean>
+
+    <bean id="arrivalAirportUrlParam" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="b"/>
+    </bean>
+
+    <bean id="departureDateUrlParam" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="2000-01-01"/>
+    </bean>
+
+    <bean id="arrivalDateUrlParam" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="2000-01-02"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+    </bean>
+
     <context:component-scan base-package="com.nearsoft.incubator.controller" />
 </beans>

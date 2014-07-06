@@ -33,10 +33,14 @@ public class ScheduleServiceTest {
     private FlightStatsClient apiClient;
     @Autowired
     private AirlineService airlineService;
-    private static final String DEPARTURE_AIRPORT = "SFO";
-    private static final String ARRIVAL_AIRPORT = "LAX";
-    private static final Date DEPARTURE_DATE = new Date();
-    private static final Date ARRIVAL_DATE = new Date();
+    @Autowired
+    private String departureAirport;
+    @Autowired
+    private String arrivalAirport;
+    @Autowired
+    private Date departureDate;
+    @Autowired
+    private Date arrivalDate;
 
     @After
     public void resetMocks(){
@@ -47,25 +51,25 @@ public class ScheduleServiceTest {
     @Test
     public void serviceReturnsApiResult(){
         Schedule theScheduleReturnedByTheApi = stubApiClientResult();
-        expect(apiClient.getScheduleByRoute(eq(DEPARTURE_AIRPORT), eq(ARRIVAL_AIRPORT),
-                eq(DEPARTURE_DATE), eq(ARRIVAL_DATE))).andReturn(theScheduleReturnedByTheApi);
+        expect(apiClient.getScheduleByRoute(eq(departureAirport), eq(arrivalAirport),
+                eq(departureDate), eq(arrivalDate))).andReturn(theScheduleReturnedByTheApi);
         expect(airlineService.getAirlinesMap()).andReturn(stubAirlineMap());
         replay(apiClient);
         replay(airlineService);
-        Schedule theScheduleReturnedByTheService = scheduleService.getScheduleByRoute(DEPARTURE_AIRPORT, ARRIVAL_AIRPORT,
-                DEPARTURE_DATE, ARRIVAL_DATE);
+        Schedule theScheduleReturnedByTheService = scheduleService.getScheduleByRoute(departureAirport, arrivalAirport,
+                departureDate, arrivalDate);
         assertThat(theScheduleReturnedByTheService, is(theScheduleReturnedByTheApi));
     }
 
     @Test
     public void serviceResolvesCorrectAirlineForEachFlight(){
-        expect(apiClient.getScheduleByRoute(eq(DEPARTURE_AIRPORT), eq(ARRIVAL_AIRPORT),
-                eq(DEPARTURE_DATE), eq(ARRIVAL_DATE))).andReturn(stubApiClientResult());
+        expect(apiClient.getScheduleByRoute(eq(departureAirport), eq(arrivalAirport),
+                eq(departureDate), eq(arrivalDate))).andReturn(stubApiClientResult());
         expect(airlineService.getAirlinesMap()).andReturn(stubAirlineMap());
         replay(apiClient);
         replay(airlineService);
-        Schedule theScheduleReturnedByTheService = scheduleService.getScheduleByRoute(DEPARTURE_AIRPORT, ARRIVAL_AIRPORT,
-                DEPARTURE_DATE, ARRIVAL_DATE);
+        Schedule theScheduleReturnedByTheService = scheduleService.getScheduleByRoute(departureAirport, arrivalAirport,
+                departureDate, arrivalDate);
         List<Flight> allFlightsReturnedByTheService = getAllFlightsIn(theScheduleReturnedByTheService);
         for(Flight eachFlightReturnedByTheService : allFlightsReturnedByTheService){
             Airline airlineResolvedByTheService = eachFlightReturnedByTheService.getAirline();

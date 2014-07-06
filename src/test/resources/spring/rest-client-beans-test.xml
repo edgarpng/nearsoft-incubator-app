@@ -14,4 +14,41 @@
     </bean>
 
     <bean id="flightStatsClientImpl" class="com.nearsoft.incubator.rest.client.FlightStatsClientImpl" />
+
+    <!-- Test parameters -->
+    <bean id="airportsUrl" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="a"/>
+    </bean>
+
+    <bean id="airlinesUrl" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="b"/>
+    </bean>
+
+    <bean id="departureFlightsUrl" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="c"/>
+    </bean>
+
+    <bean id="arrivalFlightsUrl" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="d"/>
+    </bean>
+
+    <bean id="departureAirport" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="e"/>
+    </bean>
+
+    <bean id="arrivalAirport" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="f"/>
+    </bean>
+
+    <bean id="departureDate" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="2000-01-01"/>
+    </bean>
+
+    <bean id="arrivalDate" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="2000-01-02"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd" />
+    </bean>
 </beans>

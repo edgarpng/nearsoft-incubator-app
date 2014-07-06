@@ -34,14 +34,22 @@ public class FlightStatsClientTest {
     private RestTemplate restTemplate;
     @Autowired
     private FlightStatsClientConfiguration configuration;
-    private static final String AIRPORTS_URL = "a";
-    private static final String AIRLINES_URL = "b";
-    private static final String DEPARTURE_FLIGHTS_URL = "c";
-    private static final String ARRIVAL_FLIGHTS_URL = "d";
-    private static final String HOME_AIRPORT = "e";
-    private static final String DESTINATION_AIRPORT = "f";
-    private static final Date DATE_DEPARTING_FROM_HOME = new Date();
-    private static final Date DATE_RETURNING_HOME = new Date();
+    @Autowired
+    private String airportsUrl;
+    @Autowired
+    private String airlinesUrl;
+    @Autowired
+    private String departureFlightsUrl;
+    @Autowired
+    private String arrivalFlightsUrl;
+    @Autowired
+    private String departureAirport;
+    @Autowired
+    private String arrivalAirport;
+    @Autowired
+    private Date departureDate;
+    @Autowired
+    private Date arrivalDate;
 
     @After
     public void resetMocks(){
@@ -53,8 +61,8 @@ public class FlightStatsClientTest {
     public void clientReturnsAirportsFromRestTemplate(){
         AirportsResponse responseFromRestTemplate = stubAirportsResponse();
         List<Airport> airportsReturnedByRestTemplate = responseFromRestTemplate.getAirports();
-        expect(configuration.getAirportsUrl()).andReturn(AIRPORTS_URL);
-        expect(restTemplate.getForObject(eq(AIRPORTS_URL), eq(AirportsResponse.class), anyObject(Map.class)))
+        expect(configuration.getAirportsUrl()).andReturn(airportsUrl);
+        expect(restTemplate.getForObject(eq(airportsUrl), eq(AirportsResponse.class), anyObject(Map.class)))
                 .andReturn(responseFromRestTemplate);
         replay(configuration);
         replay(restTemplate);
@@ -66,8 +74,8 @@ public class FlightStatsClientTest {
     public void clientReturnsAirlinesFromRestTemplate(){
         AirlinesResponse responseFromRestTemplate = stubAirlinesResponse();
         List<Airline> airlinesReturnedByRestTemplate = responseFromRestTemplate.getAirlines();
-        expect(configuration.getAirlinesUrl()).andReturn(AIRLINES_URL);
-        expect(restTemplate.getForObject(eq(AIRLINES_URL), eq(AirlinesResponse.class), anyObject(Map.class)))
+        expect(configuration.getAirlinesUrl()).andReturn(airlinesUrl);
+        expect(restTemplate.getForObject(eq(airlinesUrl), eq(AirlinesResponse.class), anyObject(Map.class)))
                 .andReturn(responseFromRestTemplate);
         replay(configuration);
         replay(restTemplate);
@@ -77,24 +85,24 @@ public class FlightStatsClientTest {
 
     @Test
     public void clientReturnsScheduleWithoutSwappingResponsesFromRestTemplate(){
-        FlightsResponse templateResponseDeparture = stubFlightsResponse();
-        FlightsResponse templateResponseArrival = stubFlightsResponse();
-        List<Flight> templateDepartures = templateResponseDeparture.getScheduledFlights();
-        List<Flight> templateArrivals = templateResponseArrival.getScheduledFlights();
-        expect(restTemplate.getForObject(eq(DEPARTURE_FLIGHTS_URL), eq(FlightsResponse.class),
-                eq(departureFlightParams()))).andReturn(templateResponseDeparture);
-        expect(restTemplate.getForObject(eq(ARRIVAL_FLIGHTS_URL), eq(FlightsResponse.class),
-                eq(arrivalFlightParams()))).andReturn(templateResponseArrival);
-        expect(configuration.getDepartingFlightsUrl()).andReturn(DEPARTURE_FLIGHTS_URL);
-        expect(configuration.getArrivingFlightsUrl()).andReturn(ARRIVAL_FLIGHTS_URL);
+        FlightsResponse departureResponseFromTheClient = stubFlightsResponse();
+        FlightsResponse arrivalResponseFromTheClient = stubFlightsResponse();
+        List<Flight> departuresReturnedByTheTemplate = departureResponseFromTheClient.getScheduledFlights();
+        List<Flight> arrivalsReturnedByTheTemplate = arrivalResponseFromTheClient.getScheduledFlights();
+        expect(restTemplate.getForObject(eq(departureFlightsUrl), eq(FlightsResponse.class),
+                eq(departureFlightParams()))).andReturn(departureResponseFromTheClient);
+        expect(restTemplate.getForObject(eq(arrivalFlightsUrl), eq(FlightsResponse.class),
+                eq(arrivalFlightParams()))).andReturn(arrivalResponseFromTheClient);
+        expect(configuration.getDepartingFlightsUrl()).andReturn(departureFlightsUrl);
+        expect(configuration.getArrivingFlightsUrl()).andReturn(arrivalFlightsUrl);
         replay(configuration);
         replay(restTemplate);
-        Schedule clientSchedule = apiClient.getScheduleByRoute(HOME_AIRPORT, DESTINATION_AIRPORT,
-                DATE_DEPARTING_FROM_HOME, DATE_RETURNING_HOME);
-        List<Flight> clientDepartures = clientSchedule.getDepartureFlights();
-        List<Flight> clientArrivals = clientSchedule.getArrivalFlights();
-        assertThat(clientDepartures, is(templateDepartures));
-        assertThat(clientArrivals, is(templateArrivals));
+        Schedule scheduleReturnedByTheClient = apiClient.getScheduleByRoute(departureAirport, arrivalAirport,
+                departureDate, arrivalDate);
+        List<Flight> departureReturnedByTheClient = scheduleReturnedByTheClient.getDepartureFlights();
+        List<Flight> arrivalsReturnedByTheClient = scheduleReturnedByTheClient.getArrivalFlights();
+        assertThat(departureReturnedByTheClient, is(departuresReturnedByTheTemplate));
+        assertThat(arrivalsReturnedByTheClient, is(arrivalsReturnedByTheTemplate));
     }
 
     private Map<String, String> stubApiParameters(){
@@ -114,17 +122,18 @@ public class FlightStatsClientTest {
 
     private Map<String, String> departureFlightParams(){
         Map<String, String> params = stubApiParameters();
-        params.put("departureAirport", HOME_AIRPORT);
-        params.put("arrivalAirport", DESTINATION_AIRPORT);
-        setDate(params, DATE_DEPARTING_FROM_HOME);
+        params.put("departureAirport", departureAirport);
+        params.put("arrivalAirport", arrivalAirport);
+        setDate(params, departureDate);
         return params;
     }
 
     private Map<String, String> arrivalFlightParams(){
         Map<String, String> params = stubApiParameters();
-        params.put("departureAirport", DESTINATION_AIRPORT);
-        params.put("arrivalAirport", HOME_AIRPORT);
-        setDate(params, DATE_RETURNING_HOME);
+        //In the flight back home, you arrive to the original departure airport
+        params.put("departureAirport", arrivalAirport);
+        params.put("arrivalAirport", departureAirport);
+        setDate(params, arrivalDate);
         return params;
     }
 

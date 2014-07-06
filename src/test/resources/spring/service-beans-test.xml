@@ -37,5 +37,26 @@
         <property name="airportDao" ref="daoMock" />
     </bean>
 
+    <!-- Test parameters -->
+    <bean id="departureAirport" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="a"/>
+    </bean>
+
+    <bean id="arrivalAirport" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="b"/>
+    </bean>
+
+    <bean id="departureDate" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="2000-01-01"/>
+    </bean>
+
+    <bean id="arrivalDate" factory-bean="dateFormat" factory-method="parse">
+        <constructor-arg value="2000-01-02"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd" />
+    </bean>
+
     <context:component-scan base-package="com.nearsoft.incubator.service" />
 </beans>
