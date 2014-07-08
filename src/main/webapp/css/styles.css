@@ -30,12 +30,17 @@ header{
 #main-form{
   width: 1100px;
   margin: auto;
+  text-align: center;
   margin-top: 60px;
 }
 #content{
   width: 1100px;
   margin: auto;
   margin-top: 50px;
+}
+.alert{
+  width: 1035px;
+  margin: 20px auto;
 }
 /*Search*/
 .results-header{
@@ -81,4 +86,5 @@ div.ui-datepicker{
 .select2-container .select2-choice{
   height: 34px;
   line-height: 33px;
+  text-align: left;
 }

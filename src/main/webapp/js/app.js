@@ -54,29 +54,36 @@
     });
     App.ApplicationRoute = Ember.Route.extend({
       setupController: function(controller){
-        controller.set('model', {});
+        controller.set('model', App.Search.create());
       }
     });
     App.SearchRoute = Ember.Route.extend({
       setupController: function(controller, search) {
         var applicationController = controller.get('applicationController');
-        applicationController.set('model', search);
-        controller.set('model', search);
-        controller.updateSchedule(search);
+        var searchObject = App.Search.create(search);
+        applicationController.set('model', searchObject);
+        controller.set('model', searchObject);
+        controller.updateSchedule(searchObject);
       }
     });
 
     //Ember Controllers
-    App.ApplicationController = Ember.ObjectController.extend({
-      needs: 'search',
-      searchController: Ember.computed.alias('controllers.search'),
+    App.ApplicationController = Ember.ObjectController.extend(Ember.Evented, {
       actions: {
         search: function(){
           var search = this.get('model');
-          var searchController = this.get('searchController');
-          this.transitionToRoute('search', search);
-          searchController.updateSchedule(search);
+          if(search.get('isValid')){
+            this.doSearch();
+            this.trigger('searchValid');
+          }
+          else{
+            this.trigger('searchInvalid');
+          }
         }
+      },
+      doSearch: function(){
+        var search = this.get('model');
+        this.transitionToRoute('search', search);
       }
     });
     App.SearchController = Ember.ObjectController.extend({
@@ -84,10 +91,69 @@
       applicationController: Ember.computed.alias('controllers.application'),
       schedule: null,
       updateSchedule: function(search){
-        var schedule = DS.PromiseObject.create({
-          promise: Ember.$.getJSON('/schedules', Ember.$.param(search))
+        var controller = this;
+        var schedulePromise = DS.PromiseObject.create({
+          promise: Ember.$.getJSON('/schedules', search.get('queryString'))
         });
-        this.set('schedule', schedule);
+        schedulePromise.then(Ember.$.noop, function(error){
+          controller.get('applicationController').trigger('serviceError');
+        });
+        this.set('schedule', schedulePromise);
       }
+    });
+
+    //Ember Views
+    App.ApplicationView = Ember.View.extend({
+      didInsertElement: function(){
+        this.hideNiceAlert();
+        this.get('controller').on('searchInvalid', this, this.showNiceAlert);
+        this.get('controller').on('searchValid', this, this.hideNiceAlert);
+        this.get('controller').on('serviceError', this, this.showServiceError);
+      },
+      showNiceAlert: function(){
+        var message = 'Please check the following errors:';
+        var errors = this.get('controller.errors');
+        var property;
+        message += '<ul>';
+        for(property in errors){
+          if(errors.hasOwnProperty(property) && errors[property].length){
+            message += '<li>' + errors[property] + '</li>';
+          }
+        }
+        message += '</ul>';
+        this.$('.alert').show().find('.alert-content').html(message);
+      },
+      hideNiceAlert: function(){
+        this.$('.alert').hide();
+      },
+      showServiceError: function(){
+        alert('Something went awfully wrong with the service. Please try again.');
+      }
+    })
+
+    //Ember Models
+    App.Search = Ember.Object.extend(Ember.Validations.Mixin, {
+      validations: {
+        departureAirport: {
+          presence: {message: 'Departure city cannot be blank'}
+        },
+        arrivalAirport: {
+          presence: {message: 'Arrival city cannot be blank'}
+        },
+        departureDate: {
+          presence: {message: 'Departure date cannot be blank'}
+        },
+        arrivalDate: {
+          presence: {message: 'Arrival date cannot be blank'}
+        }
+      },
+      queryString: function(){
+        return Ember.$.param({
+          departureAirport: this.get('departureAirport'),
+          arrivalAirport: this.get('arrivalAirport'),
+          departureDate: this.get('departureDate'),
+          arrivalDate: this.get('arrivalDate')
+        });
+      }.property('departureDate', 'arrivalDate', 'departureAirport', 'arrivalAirport')
     });
 }());

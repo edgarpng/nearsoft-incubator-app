@@ -19,7 +19,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.7/ember-data.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
     <script src="/js/handlebars-templates.js"></script>
-    <script src="/js/ember-validations.min.js"></script>
+    <script src="/js/ember-validations.js"></script>
     <script src="/js/select2.min.js"></script>
     <script src="/js/app.js"></script>
   </head>
