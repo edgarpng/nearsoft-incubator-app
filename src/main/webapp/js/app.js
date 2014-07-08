@@ -46,6 +46,19 @@
     });
 
     //Ember Routes
+    //Set the current route's name as a class attribute to body
+    Ember.Route.reopen({
+      activate: function() {
+        var cssClass = this.toCssClass();
+        Ember.$('body').addClass(cssClass);
+      },
+      deactivate: function() {
+        Ember.$('body').removeClass(this.toCssClass());
+      },
+      toCssClass: function() {
+        return this.routeName.replace(/\./g, '-').dasherize() + '-route';
+      }
+    });
     App.Router.map(function(){
       this.resource('search', {path: '/search/:departureAirport/:arrivalAirport/:departureDate/:arrivalDate'});
     });
