@@ -13,14 +13,11 @@
             function format(airport){
               return airport.name + ' (' + airport.city + ')';
             }
-
             function getId(airport){
               return airport.iata;
             }
-
             //'text' is the searchable attribute of the item
             var selectData = {text: 'city', results: airports};
-
             Ember.$('.airport-picker').select2({
               minimumInputLength: 3,
               data: selectData,
@@ -145,8 +142,23 @@
         },
         arrivalDate: {
           presence: {message: 'Arrival date cannot be blank'}
+        },
+        areDatesValid: {
+          acceptance: {
+            if: 'areDatesPresent',
+            message: 'Arrival date must after or the same as the departure'
+          }
         }
       },
+      areDatesValid: function(){
+        var departure = this.get('departureDate');
+        var arrival = this.get('arrivalDate');
+        var difference = moment(arrival).diff(moment(departure));
+        return difference >= 0;
+      }.property('departureDate', 'arrivalDate'),
+      areDatesPresent: function(){
+        return this.get('departureDate') && this.get('arrivalDate');
+      }.property('departureDate', 'arrivalDate'),
       queryString: function(){
         return Ember.$.param({
           departureAirport: this.get('departureAirport'),
