@@ -4,6 +4,7 @@
 
     //Ember Application
     window.App = Ember.Application.create({LOG_TRANSITIONS: true});
+
     //Ember Initializers for plugins
     Ember.Application.initializer({
       name: 'airportsInitializer',
@@ -40,12 +41,12 @@
         })
       }
     });
+
     //Datetime pretty-printer helper for Handlebars
     Ember.Handlebars.registerBoundHelper('formatTime', function(date){
       return moment(date).format('MMMM Do, h:mm a');
     });
 
-    //Ember Routes
     //Set the current route's name as a class attribute to body
     Ember.Route.reopen({
       activate: function() {
@@ -59,12 +60,14 @@
         return this.routeName.replace(/\./g, '-').dasherize() + '-route';
       }
     });
+
+    //Ember Routes
     App.Router.map(function(){
       this.resource('search', {path: '/search/:departureAirport/:arrivalAirport/:departureDate/:arrivalDate'});
     });
     App.ApplicationRoute = Ember.Route.extend({
       setupController: function(controller){
-        controller.set('model', window.search = App.Search.create());
+        controller.set('model', App.Search.create());
       }
     });
     App.SearchRoute = Ember.Route.extend({
@@ -114,7 +117,7 @@
     //Ember Views
     App.ApplicationView = Ember.View.extend({
       didInsertElement: function(){
-        //Model is invalid the moment after its creation, 
+        //Model is invalid the moment after its creation. So we have to hide the alert on page load
         this.hideSearchInvalidAlert();
         this.get('controller').on('searchInvalid', this, this.showSearchInvalidAlert);
         this.get('controller').on('serviceError', this, this.showServiceErrorAlert);
@@ -130,8 +133,8 @@
       }
     });
 
-    //Ember Models
-    App.Search = Ember.Object.extend(Ember.Validations.Mixin, {
+    //Ember Validation Mixins
+    App.SearchValidations = Ember.Mixin.create({
       validations: {
         departureAirport: {
           presence: {message: 'Departure city cannot be blank'}
@@ -151,8 +154,7 @@
           }
         }
       },
-      observeDates: function(){
-        //Validator relies on Ember setters, so custom validation properties must be explicitly set
+      datesAreValid: function(){
         var departure = this.get('departureDate');
         var arrival = this.get('arrivalDate');
         var timeDifference = moment(arrival).diff(moment(departure));
@@ -161,13 +163,10 @@
         var datesAreValid;
         if(!datesArePresent){
           //Only validate correctness if both dates are present
-          datesAreValid = true;
+          return true;
         }
-        else{
-          datesAreValid = timeDifference >= 0;
-        }
-        this.set('datesAreValid', datesAreValid);
-      }.observes('departureDate', 'arrivalDate'),
+        return timeDifference >= 0;
+      }.property('departureDate', 'arrivalDate'),
       errorMessages: function(){
         var errorMessages = [];
         var errors = this.get('errors'), error;
@@ -178,6 +177,10 @@
         }
         return errorMessages;
       }.property('errors.departureDate', 'errors.arrivalDate', 'errors.departureAirport', 'errors.arrivalAirport', 'errors.datesAreValid'),
+    });
+
+    //Ember Models
+    App.Search = Ember.Object.extend(Ember.Validations.Mixin, App.SearchValidations, {
       queryString: function(){
         return Ember.$.param({
           departureAirport: this.get('departureAirport'),
