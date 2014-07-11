@@ -66,17 +66,19 @@
       this.resource('search', {path: '/search/:departureAirport/:arrivalAirport/:departureDate/:arrivalDate'});
     });
     App.ApplicationRoute = Ember.Route.extend({
-      setupController: function(controller){
-        controller.set('model', App.Search.create());
+      model: function(){
+        return App.Search.create();
       }
     });
     App.SearchRoute = Ember.Route.extend({
-      setupController: function(controller, search) {
-        var applicationController = controller.get('applicationController');
-        var searchObject = App.Search.create(search);
-        applicationController.set('model', searchObject);
-        controller.set('model', searchObject);
-        controller.updateSchedule(searchObject);
+      model: function(params){
+        return App.Search.create(params);
+      },
+      setupController: function(controller, model) {
+        //Create new Search object to force Ember execute this method on each transition
+        var search = App.Search.create(model);
+        controller.set('model', search);
+        controller.set('applicationController.model', search);
       }
     });
 
@@ -84,8 +86,7 @@
     App.ApplicationController = Ember.ObjectController.extend(Ember.Evented, {
       actions: {
         search: function(){
-          var search = this.get('model');
-          if(search.get('isValid')){
+          if(this.get('isValid')){
             this.doSearch();
           }
           else{
@@ -101,17 +102,16 @@
     App.SearchController = Ember.ObjectController.extend({
       needs: 'application',
       applicationController: Ember.computed.alias('controllers.application'),
-      schedule: null,
-      updateSchedule: function(search){
+      schedule: function(){
         var controller = this;
-        var schedulePromise = DS.PromiseObject.create({
-          promise: Ember.$.getJSON('/schedules', search.get('queryString'))
+        var promise = DS.PromiseObject.create({
+          promise: Ember.$.getJSON('/schedules', this.get('queryString'))
         });
-        schedulePromise.then(Ember.$.noop, function(error){
+        promise.then(Ember.$.noop, function(error){
           controller.get('applicationController').trigger('serviceError');
         });
-        this.set('schedule', schedulePromise);
-      }
+        return promise;
+      }.property('model')
     });
 
     //Ember Views
