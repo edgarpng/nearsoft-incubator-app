@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.service;
 
-import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.model.Schedule;
 
 import java.util.Date;
 

@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.controller;
 
-import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.model.Schedule;
 import com.nearsoft.incubator.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

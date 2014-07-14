@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.controller;
 
-import com.nearsoft.incubator.bo.Airport;
+import com.nearsoft.incubator.model.Airport;
 import com.nearsoft.incubator.service.AirportService;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.nearsoft.incubator.bo;
+package com.nearsoft.incubator.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 

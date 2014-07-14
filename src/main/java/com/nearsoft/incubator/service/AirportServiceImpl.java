@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.service;
 
-import com.nearsoft.incubator.bo.Airport;
+import com.nearsoft.incubator.model.Airport;
 import com.nearsoft.incubator.dao.Dao;
 import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.joda.time.DateTime;

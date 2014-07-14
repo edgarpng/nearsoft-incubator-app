@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.dao;
 
-import com.nearsoft.incubator.bo.Airport;
+import com.nearsoft.incubator.model.Airport;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;

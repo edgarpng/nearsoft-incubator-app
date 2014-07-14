@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.dao;
 
-import com.nearsoft.incubator.bo.PersistableEntity;
+import com.nearsoft.incubator.model.PersistableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by edgar on 26/06/14.
  *
  */
-public abstract class JdbcDao<T extends PersistableEntity> extends JdbcDaoSupport implements Dao<T> {
+public abstract class JdbcDao<T extends PersistableModel> extends JdbcDaoSupport implements Dao<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(JdbcDao.class);
     protected Class<T> clazz;

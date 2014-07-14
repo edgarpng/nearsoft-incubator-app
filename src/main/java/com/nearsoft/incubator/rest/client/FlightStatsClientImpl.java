@@ -1,9 +1,9 @@
 package com.nearsoft.incubator.rest.client;
 
-import com.nearsoft.incubator.bo.Airline;
-import com.nearsoft.incubator.bo.Airport;
-import com.nearsoft.incubator.bo.Flight;
-import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.model.Airline;
+import com.nearsoft.incubator.model.Airport;
+import com.nearsoft.incubator.model.Flight;
+import com.nearsoft.incubator.model.Schedule;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

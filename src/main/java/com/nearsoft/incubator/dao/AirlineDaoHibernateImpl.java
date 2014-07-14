@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.dao;
 
-import com.nearsoft.incubator.bo.Airline;
+import com.nearsoft.incubator.model.Airline;
 import org.springframework.stereotype.Component;
 
 /**

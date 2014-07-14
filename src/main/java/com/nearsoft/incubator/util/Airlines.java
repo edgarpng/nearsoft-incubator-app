@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.util;
 
-import com.nearsoft.incubator.bo.Airline;
+import com.nearsoft.incubator.model.Airline;
 
 import java.util.Collection;
 import java.util.HashMap;

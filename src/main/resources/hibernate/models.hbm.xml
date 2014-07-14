@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.nearsoft.incubator.bo.Airline" table="airline">
+    <class name="com.nearsoft.incubator.model.Airline" table="airline">
         <id column="id" name="id" type="long">
             <generator class="identity"/>
         </id>
@@ -12,7 +12,7 @@
         <property name="creationDate" column="creationDate" type="timestamp" not-null="true" />
     </class>
 
-    <class name="com.nearsoft.incubator.bo.Airport" table="airport">
+    <class name="com.nearsoft.incubator.model.Airport" table="airport">
         <id column="id" name="id" type="long">
             <generator class="identity"/>
         </id>

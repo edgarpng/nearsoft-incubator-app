@@ -1,8 +1,8 @@
 package com.nearsoft.incubator.service;
 
-import com.nearsoft.incubator.bo.Airline;
-import com.nearsoft.incubator.bo.Flight;
-import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.model.Airline;
+import com.nearsoft.incubator.model.Flight;
+import com.nearsoft.incubator.model.Schedule;
 import com.nearsoft.incubator.rest.client.FlightStatsClient;
 import org.junit.After;
 import org.junit.Test;

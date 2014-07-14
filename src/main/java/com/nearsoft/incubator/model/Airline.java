@@ -1,4 +1,4 @@
-package com.nearsoft.incubator.bo;
+package com.nearsoft.incubator.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * Created by edgar on 18/06/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Airline extends PersistableEntity   {
+public class Airline extends PersistableModel {
 
     private long id;
     @JsonProperty("fs")

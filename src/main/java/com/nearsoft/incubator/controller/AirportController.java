@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.controller;
 
-import com.nearsoft.incubator.bo.Airport;
+import com.nearsoft.incubator.model.Airport;
 import com.nearsoft.incubator.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

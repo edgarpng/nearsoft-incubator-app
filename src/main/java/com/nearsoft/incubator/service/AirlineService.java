@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.service;
 
-import com.nearsoft.incubator.bo.Airline;
+import com.nearsoft.incubator.model.Airline;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
 package com.nearsoft.incubator.rest.client;
 
-import com.nearsoft.incubator.bo.Airline;
-import com.nearsoft.incubator.bo.Airport;
-import com.nearsoft.incubator.bo.Schedule;
+import com.nearsoft.incubator.model.Airline;
+import com.nearsoft.incubator.model.Airport;
+import com.nearsoft.incubator.model.Schedule;
 
 import java.util.Date;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.nearsoft.incubator.dao;
 
-import com.nearsoft.incubator.bo.PersistableEntity;
+import com.nearsoft.incubator.model.PersistableModel;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by edgar on 26/06/14.
  */
-public abstract class HibernateDao<T extends PersistableEntity> implements Dao<T>{
+public abstract class HibernateDao<T extends PersistableModel> implements Dao<T>{
 
     private static int insertBatchSize = 50;
     private SessionFactory sessionFactory;
