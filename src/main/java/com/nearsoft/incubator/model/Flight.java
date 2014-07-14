@@ -23,11 +23,6 @@ public class Flight {
     private Airline airline;
     private int stops;
 
-    public String getId() {
-        //Necessary for the front-end to identify single Flight objects
-        return this.flightNumber;
-    }
-
     public String getDepartureTime() {
         return departureTime;
     }
